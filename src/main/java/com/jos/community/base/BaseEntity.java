@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,6 +18,11 @@ public abstract class BaseEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3811980688239029585L;
+
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
 	@Column(name = "created_by")
 	private String createdBy;
@@ -29,6 +37,14 @@ public abstract class BaseEntity implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "modified_date")
 	private Date modifiedDate;
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getCreatedBy() {
 		return createdBy;
