@@ -26,6 +26,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>run</finalName>
+		<finalName>COMMUNITY-WEB</finalName>
 	</build>
 </project>
