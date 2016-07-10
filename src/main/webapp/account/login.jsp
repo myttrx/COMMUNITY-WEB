@@ -1,18 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="st" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
-
+<%@include file="/WEB-INF/common/global.jsp"%>
 <!-- basic styles -->
 
-<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+<link href="<%=g_contextPath%>/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="<%=g_contextPath%>/assets/css/font-awesome.min.css" />
 
 <!--[if IE 7]>
-  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+  <link rel="stylesheet" href="<%=g_contextPath%>/assets/css/font-awesome-ie7.min.css" />
 <![endif]-->
 
 <!-- page specific plugin styles -->
@@ -20,11 +22,11 @@
 
 <!-- ace styles -->
 
-<link rel="stylesheet" href="assets/css/ace.min.css" />
-<link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="<%=g_contextPath%>/assets/css/ace.min.css" />
+<link rel="stylesheet" href="<%=g_contextPath%>/assets/css/ace-rtl.min.css" />
 
 <!--[if lte IE 8]>
-  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+  <link rel="stylesheet" href="<%=g_contextPath%>/assets/css/ace-ie.min.css" />
 <![endif]-->
 
 <!-- inline styles related to this page -->
@@ -32,9 +34,10 @@
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
 <!--[if lt IE 9]>
-<script src="assets/js/html5shiv.js"></script>
-<script src="assets/js/respond.min.js"></script>
+<script src="<%=g_contextPath%>/assets/js/html5shiv.js"></script>
+<script src="<%=g_contextPath%>/assets/js/respond.min.js"></script>
 <![endif]-->
+
 </head>
 
 <body class="login-layout">
@@ -61,29 +64,35 @@
 										</h4>
 
 										<div class="space-6"></div>
-
-										<form>
+										
+										<form:form action="${g_contextPath}/com/login" method="post" commandName="loginUserVo">
 											<fieldset>
-												<label class="block clearfix"> <span class="block input-icon input-icon-right"> <input type="text" class="form-control" placeholder="Username" /> <i class="icon-user"></i>
-												</span>
-												</label> <label class="block clearfix"> <span class="block input-icon input-icon-right"> <input type="password" class="form-control" placeholder="Password" /> <i class="icon-lock"></i>
+												<label class="block clearfix"> 
+													<span class="block input-icon input-icon-right"> 
+														<input type="text" class="form-control" placeholder="Username" /> 
+														<i class="icon-user"></i>
+													</span>
+												</label> 
+												<span class="lbl"><form:errors path="userName" cssClass="error" /></span>
+												<label class="block clearfix"> <span class="block input-icon input-icon-right"> <input type="password" class="form-control" placeholder="Password" /> <i class="icon-lock"></i>
 												</span>
 												</label>
-
+												
+												<span class="lbl"><form:errors path="*"></form:errors></span>
 												<div class="space"></div>
 
 												<div class="clearfix">
 													<label class="inline"> <input type="checkbox" class="ace" /> <span class="lbl"> Remember Me</span>
 													</label>
 
-													<button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+													<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
 														<i class="icon-key"></i> Login
 													</button>
 												</div>
 
 												<div class="space-4"></div>
 											</fieldset>
-										</form>
+										</form:form>
 
 										<div class="social-or-login center">
 											<span class="bigger-110">Or Login Using</span>
@@ -213,20 +222,25 @@
 	<!--[if !IE]> -->
 
 	<script type="text/javascript">
-		window.jQuery|| document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+ "<"+"/script>");
+		window.jQuery
+				|| document
+						.write("<script src='<%=g_contextPath%>/assets/js/jquery-2.0.3.min.js'>"
+								+ "<"+"/script>");
 	</script>
 
 	<!-- <![endif]-->
 
 	<!--[if IE]>
 <script type="text/javascript">
- window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+ window.jQuery || document.write("<script src='<%=g_contextPath%>/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
 </script>
 <![endif]-->
 
 	<script type="text/javascript">
 		if ("ontouchend" in document)
-			document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+ "<"+"/script>");
+			document
+					.write("<script src='<%=g_contextPath%>/assets/js/jquery.mobile.custom.min.js'>"
+							+ "<"+"/script>");
 	</script>
 
 	<!-- inline scripts related to this page -->
