@@ -28,17 +28,18 @@ public class LoginController {
 		binder.setValidator(loginUserValidator);
 	}
 
-	@RequestMapping(value = "login", method = RequestMethod.GET)
+	@RequestMapping(value = "login.shtml", method = RequestMethod.GET)
 	public String index(Model model) {
 		return "/account/login";
 	}
 
-	@RequestMapping(value = "login", method = RequestMethod.POST)
+	@RequestMapping(value = "login.shtml", method = RequestMethod.POST)
 	public String login(@ModelAttribute @Validated LoginUserVo loginUserVo, BindingResult result) {
 		if (result.hasErrors()) {
 			return "/account/login";
 		}
 		return "main";
 	}
+	
 	
 }
