@@ -32,7 +32,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>springServlet</servlet-name>
-		<url-pattern>/com/*</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>springServlet</servlet-name>

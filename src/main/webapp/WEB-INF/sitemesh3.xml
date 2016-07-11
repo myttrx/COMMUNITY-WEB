@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
 	<!-- 指明满足"/*"的页面，将被装饰 -->
-	<mapping path="/com/service/*" decorator="/WEB-INF/decorators/layout-main.jsp" />
-	<mapping path="/com/system/*" decorator="/WEB-INF/decorators/layout-main.jsp" />
+	<mapping path="/service/*" decorator="/WEB-INF/decorators/layout-main.jsp" />
+	<mapping path="/system/*" decorator="/WEB-INF/decorators/layout-main.jsp" />
 
 	<!-- 指明满足"/exclude.jsp*"的页面，将被排除，不被装饰 -->
 	<mapping path="/exclude.jsp*" exclue="true" />
-	<mapping path="/com/login" exclue="true" />
+	<mapping path="/login" exclue="true" />
 </sitemesh>
