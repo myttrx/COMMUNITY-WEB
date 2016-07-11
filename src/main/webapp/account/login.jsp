@@ -65,26 +65,42 @@
 
 										<div class="space-6"></div>
 										
-										<form:form action="${g_contextPath}/com/login" method="post" commandName="loginUserVo">
+										<form:form action="${g_contextPath}/login.shtml" method="post" commandName="loginUserVo">
 											<fieldset>
 												<label class="block clearfix"> 
 													<span class="block input-icon input-icon-right"> 
-														<input type="text" class="form-control" placeholder="Username" /> 
+														<input type="text" class="form-control" placeholder="UserName" /> 
 														<i class="icon-user"></i>
 													</span>
+													
 												</label> 
-												<span class="lbl"><form:errors path="userName" cssClass="error" /></span>
-												<label class="block clearfix"> <span class="block input-icon input-icon-right"> <input type="password" class="form-control" placeholder="Password" /> <i class="icon-lock"></i>
-												</span>
-												</label>
+												<p class="text-danger "><form:errors path="userName" cssClass="error" /></p>
 												
-												<span class="lbl"><form:errors path="*"></form:errors></span>
+												<label class="block clearfix"> 
+													<span class="block input-icon input-icon-right"> 
+														<input type="password" class="form-control" placeholder="Password" id="password" name="password"/> 
+														<i class="icon-lock"></i>
+													</span>
+												</label>
+												<p class="text-danger "><form:errors path="password" cssClass="error" /></p>
+												
+												<label class="block clearfix"> 
+													<span class="block input-icon input-icon-right form-inline"> 
+														<input type="text" class="input-medium form-control" placeholder="IdentifyingCode" id="identifyingCode" name="identifyingCode" size="5"/> 
+														
+														<span class="btn btn-white"></span>
+														<button type="button" class="btn btn-white ">White</button>
+													</span>
+													
+												</label> 
+												<p class="text-danger "><form:errors path="userName" cssClass="error" /></p>
+												
 												<div class="space"></div>
 
 												<div class="clearfix">
 													<label class="inline"> <input type="checkbox" class="ace" /> <span class="lbl"> Remember Me</span>
 													</label>
-
+	
 													<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
 														<i class="icon-key"></i> Login
 													</button>
