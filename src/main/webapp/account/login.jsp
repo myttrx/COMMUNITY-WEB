@@ -86,14 +86,13 @@
 												
 												<label class="block clearfix"> 
 													<span class="block input-icon input-icon-right form-inline"> 
-														<input type="text" class="input-medium form-control" placeholder="IdentifyingCode" id="identifyingCode" name="identifyingCode" size="5"/> 
+														<input type="text" class="input-medium form-control" placeholder="Verify Code" id="verifyCode" name="verifyCode" size="5"/> 
 														
-														<span class="btn btn-white"></span>
-														<button type="button" class="btn btn-white ">White</button>
+														<img alt="" src="${g_contextPath}/kaptcha/getKaptchaImage.shtml" id="kaptchaImage" name="kaptchaImage">
 													</span>
 													
 												</label> 
-												<p class="text-danger "><form:errors path="userName" cssClass="error" /></p>
+												<p class="text-danger "><form:errors path="verifyCode" cssClass="error" /></p>
 												
 												<div class="space"></div>
 
@@ -266,6 +265,12 @@
 			jQuery('.widget-box.visible').removeClass('visible');
 			jQuery('#' + id).addClass('visible');
 		}
+		
+		$(function(){
+	        $('#kaptchaImage').click(function () { 
+	            $(this).attr('src', '${g_contextPath}/kaptcha/getKaptchaImage.shtml?' + Math.floor(Math.random()*100)); 
+	        })
+	    });
 	</script>
 </body>
 </html>

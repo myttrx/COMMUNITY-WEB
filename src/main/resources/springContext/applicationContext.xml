@@ -45,6 +45,24 @@
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
 
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">  
+        <property name="config">  
+            <bean class="com.google.code.kaptcha.util.Config">  
+                <constructor-arg>  
+                    <props>  
+                        <prop key="kaptcha.border">no</prop>  
+                        <prop key="kaptcha.border.color">105,179,90</prop>  
+                        <prop key="kaptcha.textproducer.font.color">red</prop>  
+                        <prop key="kaptcha.image.width">120</prop>
+                        <prop key="kaptcha.textproducer.font.size">30</prop>
+                        <prop key="kaptcha.image.height">34</prop>
+                        <prop key="kaptcha.session.key">code</prop>
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                    </props>  
+                </constructor-arg>  
+            </bean>  
+        </property>  
+    </bean>
 	<!--邮件模板设置日 -->
 	<!-- 
 	<bean id="velocityEngine"
