@@ -6,5 +6,5 @@
 
 	<!-- 指明满足"/exclude.jsp*"的页面，将被排除，不被装饰 -->
 	<mapping path="/exclude.jsp*" exclue="true" />
-	<mapping path="/login" exclue="true" />
+	<mapping path="/login.shtml" exclue="true" />
 </sitemesh>
