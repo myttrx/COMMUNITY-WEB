@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.jos.community.module.vo.LoginUserVo;
 
@@ -30,16 +32,22 @@ public class LoginController {
 
 	@RequestMapping(value = "login.shtml", method = RequestMethod.GET)
 	public String index(Model model) {
+		LoginUserVo loginUserVo = new LoginUserVo();
+	     model.addAttribute("loginUserVo", loginUserVo);
 		return "/account/login";
 	}
 
 	@RequestMapping(value = "login.shtml", method = RequestMethod.POST)
-	public String login(@ModelAttribute @Validated LoginUserVo loginUserVo, BindingResult result) {
+	public String login(@ModelAttribute @Validated LoginUserVo loginUserVo, BindingResult result,SessionStatus status) {
 		if (result.hasErrors()) {
 			return "/account/login";
 		}
-		return "main";
+		status.setComplete();
+		return "redirect:main.shtml";
 	}
 	
-	
+	@RequestMapping(value = "main.shtml", method = RequestMethod.GET)
+	public String main(Model model) {
+		return "/main";
+	}
 }

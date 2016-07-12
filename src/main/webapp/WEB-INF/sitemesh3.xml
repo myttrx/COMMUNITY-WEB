@@ -3,6 +3,7 @@
 	<!-- 指明满足"/*"的页面，将被装饰 -->
 	<mapping path="/service/*" decorator="/WEB-INF/decorators/layout-main.jsp" />
 	<mapping path="/system/*" decorator="/WEB-INF/decorators/layout-main.jsp" />
+	<mapping path="/main.shtml" decorator="/WEB-INF/decorators/layout-main.jsp" />
 
 	<!-- 指明满足"/exclude.jsp*"的页面，将被排除，不被装饰 -->
 	<mapping path="/exclude.jsp*" exclue="true" />

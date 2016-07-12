@@ -65,11 +65,11 @@
 
 										<div class="space-6"></div>
 										
-										<form:form action="${g_contextPath}/login.shtml" method="post" commandName="loginUserVo">
+										<form:form action="${g_contextPath}/login.shtml" method="post" modelAttribute="loginUserVo">
 											<fieldset>
 												<label class="block clearfix"> 
 													<span class="block input-icon input-icon-right"> 
-														<input type="text" class="form-control" placeholder="UserName" /> 
+														<form:input path="userName" id="userName" class="form-control"  placeholder="User Name"/>
 														<i class="icon-user"></i>
 													</span>
 													
@@ -78,7 +78,7 @@
 												
 												<label class="block clearfix"> 
 													<span class="block input-icon input-icon-right"> 
-														<input type="password" class="form-control" placeholder="Password" id="password" name="password"/> 
+														<form:password path="password" id="password" class="form-control"  placeholder="Password"/>
 														<i class="icon-lock"></i>
 													</span>
 												</label>
@@ -86,8 +86,7 @@
 												
 												<label class="block clearfix"> 
 													<span class="block input-icon input-icon-right form-inline"> 
-														<input type="text" class="input-medium form-control" placeholder="Verify Code" id="verifyCode" name="verifyCode" size="5"/> 
-														
+														<form:input path="verifyCode" id="verifyCode" class="input-medium form-control"  placeholder="Verify Code" maxlength="4"/>
 														<img alt="" src="${g_contextPath}/kaptcha/getKaptchaImage.shtml" id="kaptchaImage" name="kaptchaImage">
 													</span>
 													
