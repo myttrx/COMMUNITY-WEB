@@ -83,7 +83,7 @@
 
 	<import resource="persistenceContext.xml" />
 	
-<!-- 	<import resource="springSecurityContext.xml" /> -->
+	<import resource="springSecurityContext.xml" />
 <!-- 	<import resource="activitiContext.xml" /> -->
 <!-- 	<import resource="springSchedule.xml" /> -->
 <!-- 	<import resource="emailTaskContext.xml" /> -->
