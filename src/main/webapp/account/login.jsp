@@ -64,8 +64,8 @@
 										</h4>
 
 										<div class="space-6"></div>
-										
-										<form:form action="${g_contextPath}/login.shtml" method="post" modelAttribute="loginUserVo">
+										<jsp:useBean id="loginUserVo"  class="com.jos.community.module.vo.LoginUserVo" scope="request" ></jsp:useBean>
+										<form:form action="${g_contextPath}/login" method="post" modelAttribute="loginUserVo">
 											<fieldset>
 												<label class="block clearfix"> 
 													<span class="block input-icon input-icon-right"> 
