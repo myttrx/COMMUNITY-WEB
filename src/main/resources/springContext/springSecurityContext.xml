@@ -14,7 +14,7 @@
 		<intercept-url pattern="/service/**" access="isAuthenticated()" />
 		<intercept-url pattern="/system/**" access="isAuthenticated()" />
 		<intercept-url pattern="/demo/**" />  <!-- access="hasRole('systemAdmin')" -->
-		<form-login login-page="/account/login.jsp" />
+		<form-login login-page="/account/login.jsp" username-parameter="userName" default-target-url="/main.shtml"/>
 		<logout logout-success-url="/account/logout.jsp" />
 		<access-denied-handler error-page="/account/accessDenied.jsp" />
 
@@ -39,6 +39,7 @@
 		<beans:property name="userDetailsService">
 			<beans:ref bean="userDetailsServiceImpl" />
 		</beans:property>
+		<beans:property name="passwordEncoder" ref="md5password" />
 	</beans:bean>
 
 	<beans:bean name="md5password" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"></beans:bean>
