@@ -31,9 +31,10 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.jos.community" level="debug" />
+	<logger name="com.jos" level="debug" />
+	<logger name="com.jos" level="info" />
+	<logger name="org.springframework" level="debug" />
 	<logger name="org.springframework" level="info" />
-
 	<logger name="org.springframework.beans" level="info" />
 <!-- 	<logger name="org.activiti.engine.impl.persistence.entity" level="DEBUG" /> -->
 
