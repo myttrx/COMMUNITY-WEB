@@ -27,8 +27,8 @@ public class LoginUserValidator implements Validator{
 		ValidationUtils.rejectIfEmpty(errors, "password", "user.password.required","密码不能为空");
 		ValidationUtils.rejectIfEmpty(errors, "verifyCode", "user.verifyCode.required","验证码不能为空");
 		LoginUserVo loginUserVo = (LoginUserVo) target;
-		if (StrUtils.isNotBlank(loginUserVo.getVerifyCode()) && !kaptchaExpected.equals(loginUserVo.getVerifyCode())) {
-			errors.rejectValue("verifyCode", null, "验证码错误");
+		if (StrUtils.isNotBlank(loginUserVo.getCaptcha()) && !kaptchaExpected.equals(loginUserVo.getCaptcha())) {
+			errors.rejectValue("captcha", null, "验证码错误");
 		}
 	}
 

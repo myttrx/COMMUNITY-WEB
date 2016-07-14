@@ -31,7 +31,7 @@ public class CaptchaController {
 	public ModelAndView getKaptchaImage(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		String code = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
-		logger.info("******************Verify Code: " + code + "******************");
+		logger.info("******************Captcha : " + code + "******************");
 
 		response.setDateHeader("Expires", 0);
 		// Set standard HTTP/1.1 no-cache headers.

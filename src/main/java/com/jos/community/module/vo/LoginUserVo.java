@@ -10,7 +10,7 @@ public class LoginUserVo implements Serializable {
 	private static final long serialVersionUID = -7437659775577951668L;
 	private String userName;
 	private String password;
-	private String verifyCode;
+	private String captcha;
 
 	public String getUserName() {
 		return userName;
@@ -28,12 +28,12 @@ public class LoginUserVo implements Serializable {
 		this.password = password;
 	}
 
-	public String getVerifyCode() {
-		return verifyCode;
+	public String getCaptcha() {
+		return captcha;
 	}
 
-	public void setVerifyCode(String verifyCode) {
-		this.verifyCode = verifyCode;
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
 	}
 
 }
