@@ -14,17 +14,18 @@
 		<intercept-url pattern="/service/**" access="isAuthenticated()" />
 		<intercept-url pattern="/system/**" access="isAuthenticated()" />
 		<intercept-url pattern="/demo/**" />  <!-- access="hasRole('systemAdmin')" -->
-		<form-login login-page="/account/login.jsp" username-parameter="userName" default-target-url="/main.shtml"/>
+		<form-login login-page="/account/login.jsp" username-parameter="userName" authentication-failure-url="/account/login.jsp?error=true" default-target-url="/main.shtml"/>
 		<logout logout-success-url="/account/logout.jsp" />
 		<access-denied-handler error-page="/account/accessDenied.jsp" />
 
 		<csrf disabled="true" />
 
 		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="filterSecurityInterceptor" />
+		<custom-filter before="FORM_LOGIN_FILTER" ref="loginAuthenticationFilter" />
 	</http>
 
 	<!-- <beans:bean id="josAuthenticationSuccessHandler" class="com.jos.estar.security.JosAuthenticationSuccessHandler"></beans:bean> -->
-
+	
 	<beans:bean id="filterSecurityInterceptor" class="com.jos.security.JosFilterSecurityInterceptor">
 		<beans:property name="authenticationManager" ref="josAuthenticationManager" />
 		<beans:property name="accessDecisionManager" ref="josAccessDecisionManager" />
@@ -40,6 +41,7 @@
 			<beans:ref bean="userDetailsServiceImpl" />
 		</beans:property>
 		<beans:property name="passwordEncoder" ref="md5password" />
+		<beans:property name="hideUserNotFoundExceptions" value="false" />
 	</beans:bean>
 
 	<beans:bean name="md5password" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"></beans:bean>
@@ -52,5 +54,20 @@
 		<beans:property name="resourceService" ref="resourceService" />
 	</beans:bean>
 
-
+	<!-- 自定义认证过滤器 -->
+	<beans:bean id="loginAuthenticationFilter" class="com.jos.security.JosLoginAuthenticationFilter">
+		<beans:property name="authenticationManager" ref="josAuthenticationManager" />
+		<beans:property name="authenticationFailureHandler" ref="authenticationFailureHandler" />
+		<beans:property name="authenticationSuccessHandler" ref="authenticationSuccessHandler" />
+		<beans:property name="filterProcessesUrl" value="/login" />
+		<beans:property name="usernameParameter" value="userName"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+		<beans:property name="defaultTargetUrl" value="/main.shtml"/>
+	</beans:bean>
+	<beans:bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<beans:property name="defaultFailureUrl" value="/account/login.jsp?error=true" />
+	</beans:bean>
+	
 </beans:beans>
