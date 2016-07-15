@@ -29,6 +29,9 @@ public class JosLoginAuthenticationFilter extends UsernamePasswordAuthentication
 			HttpServletResponse response) throws AuthenticationException {
 		String expectedCaptcha =  obtainExpectedCaptcha(request);
 		String actualCaptcha = obtainActualCaptcha(request);
+		if (StrUtils.isBlank(expectedCaptcha)) {
+			throw new JosLoginAuthenticationException(messageService.getMessage("authentication.overtimeCaptcha", "Captcha Overtime"));
+		}
 		if (StrUtils.isBlank(actualCaptcha)) {
 			throw new JosLoginAuthenticationException(messageService.getMessage("authentication.requiredCaptcha", "Captcha is required"));
 		}
