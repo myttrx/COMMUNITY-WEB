@@ -26,16 +26,13 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Autowired
 	MessageService messageService;
 	
-	protected MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
-	
 	public UserDetails loadUserByUsername(String username)throws UsernameNotFoundException {
-		String authenticationMsg = this.messageService.getMessage("authentication.invalidUserNameOrPassword", "Bad credentials");
 		if (StrUtils.isBlank(username)) {
-			throw new UsernameNotFoundException(authenticationMsg);
+			throw new UsernameNotFoundException(this.messageService.getMessage("authentication.requiredUserName", "User Name is required"));
 		}
 		LoginUserDetails loginUserDetails = this.userService.findUserDetail(username);
 		if (loginUserDetails==null) {
-			throw new UsernameNotFoundException(authenticationMsg);
+			throw new UsernameNotFoundException(this.messageService.getMessage("authentication.invalidUserName", "Invalid User Name"));
 		}
 		return loginUserDetails;
 	}
