@@ -21,9 +21,9 @@ import com.google.code.kaptcha.Producer;
 
 @Controller
 @RequestMapping("/kaptcha")
-public class CaptchaController {
+public class CaptchaCtrl {
 
-	protected static Logger logger = LoggerFactory.getLogger(CaptchaController.class);
+	protected static Logger logger = LoggerFactory.getLogger(CaptchaCtrl.class);
 	@Autowired
 	private Producer captchaProducer = null;
 

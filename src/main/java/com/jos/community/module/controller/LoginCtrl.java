@@ -30,7 +30,7 @@ import com.jos.security.JosDaoAuthenticationProvider;
 
 @Controller
 @RequestMapping("/")
-public class LoginController {
+public class LoginCtrl {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 	
