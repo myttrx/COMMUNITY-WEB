@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -62,8 +63,14 @@
 										<h4 class="header blue lighter bigger">
 											<i class="icon-coffee green"></i> Please Enter Your Information
 										</h4>
-
 										<div class="space-6"></div>
+										<c:if test="${not empty param['error']}">
+												<div class="alert alert-danger" role="alert">
+												<span class="glyphicon icon-warning-sign red bigger-130" aria-hidden="true"></span> 
+												${SPRING_SECURITY_LAST_EXCEPTION.message}
+											</div>
+										</c:if>
+										
 										<jsp:useBean id="loginUserVo"  class="com.jos.community.module.vo.LoginUserVo" scope="request" ></jsp:useBean>
 										<form:form action="${g_contextPath}/login" method="post" modelAttribute="loginUserVo">
 											<fieldset>
@@ -86,12 +93,12 @@
 												
 												<label class="block clearfix"> 
 													<span class="block input-icon input-icon-right form-inline"> 
-														<form:input path="verifyCode" id="verifyCode" class="input-medium form-control"  placeholder="Verify Code" maxlength="4"/>
+														<form:input path="captcha" id="captcha" class="input-medium form-control"  placeholder="Verify Code" maxlength="4"/>
 														<img alt="" src="${g_contextPath}/kaptcha/getKaptchaImage.shtml" id="kaptchaImage" name="kaptchaImage">
 													</span>
 													
 												</label> 
-												<p class="text-danger "><form:errors path="verifyCode" cssClass="error" /></p>
+												<p class="text-danger "><form:errors path="captcha" cssClass="error" /></p>
 												
 												<div class="space"></div>
 
@@ -106,6 +113,8 @@
 
 												<div class="space-4"></div>
 											</fieldset>
+											
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 										</form:form>
 
 										<div class="social-or-login center">
