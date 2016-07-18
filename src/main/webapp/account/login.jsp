@@ -64,7 +64,7 @@
 											<i class="icon-coffee green"></i> Please Enter Your Information
 										</h4>
 										<div class="space-6"></div>
-										<c:if test="${not empty param['error']}">
+										<c:if test="${not empty param['error'] && not empty SPRING_SECURITY_LAST_EXCEPTION.message}">
 												<div class="alert alert-danger" role="alert">
 												<span class="glyphicon icon-warning-sign red bigger-130" aria-hidden="true"></span> 
 												${SPRING_SECURITY_LAST_EXCEPTION.message}
