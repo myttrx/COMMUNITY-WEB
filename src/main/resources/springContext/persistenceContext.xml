@@ -22,6 +22,7 @@
 		<property name="packagesToScan">
 			<list>
 				<value>com.jos.community.module.entity</value>
+				<value>com.jos.community.system.module.entity</value>
 			</list>
 		</property>
 	</bean>
