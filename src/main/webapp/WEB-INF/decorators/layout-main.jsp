@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<%@include file="/WEB-INF/common/global.jsp"%>
 	<%@include file="/WEB-INF/common/layout-with-lib.jsp"%>
 	<%@include file="/WEB-INF/common/layout-with-header.jsp"%>
 	<div class="main-container" id="main-container">
