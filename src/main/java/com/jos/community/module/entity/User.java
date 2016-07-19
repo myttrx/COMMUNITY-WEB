@@ -1,16 +1,14 @@
 package com.jos.community.module.entity;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 
 import com.jos.community.base.BaseEntity;
+import com.jos.community.system.module.entity.SecurityRole;
 
 @Entity
 @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
@@ -31,6 +29,10 @@ public class User extends BaseEntity {
 
 	@Column(name = "user_name")
 	private String userName;
+
+	// bi-directional many-to-many association to SecurityRole
+	@ManyToMany(mappedBy = "users")
+	private List<SecurityRole> securityRoles;
 
 	public User() {
 	}
@@ -81,6 +83,14 @@ public class User extends BaseEntity {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public List<SecurityRole> getSecurityRoles() {
+		return securityRoles;
+	}
+
+	public void setSecurityRoles(List<SecurityRole> securityRoles) {
+		this.securityRoles = securityRoles;
 	}
 
 }
