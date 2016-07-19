@@ -11,7 +11,10 @@
   <link rel="stylesheet" href="+${g_contextPath}+""assets/css/font-awesome-ie7.min.css" />
 <![endif]-->
 
-<!-- page specific plugin styles -->
+<!-- page specific plugin styles eg.jqgrid -->
+<link rel="stylesheet" href="${g_contextPath}/assets/css/jquery-ui-1.10.3.full.min.css" />
+<link rel="stylesheet" href="${g_contextPath}/assets/css/datepicker.css" />
+<link rel="stylesheet" href="${g_contextPath}/assets/css/ui.jqgrid.css" />
 
 <!-- fonts -->
 
@@ -24,8 +27,10 @@
   <link rel="stylesheet" href="${g_contextPath}/assets/css/ace-ie.min.css" />
 <![endif]-->
 
-<!-- inline styles related to this page -->
 
+</head>
+<body>
+	
 <!-- ace settings handler -->
 <script src="${g_contextPath}/assets/js/ace-extra.min.js"></script>
 
@@ -38,31 +43,28 @@
 
 <!-- basic scripts -->
 <!--[if !IE]> -->
-<script type="text/javascript">
-	window.jQuery || document.write("<script src="+${g_contextPath}+"'assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
-</script>
-
+<script src="${g_contextPath}/assets/js/jquery-2.0.3.min.js"></script>
 <!-- <![endif]-->
 
 <!--[if IE]>
-<script type="text/javascript">
- window.jQuery || document.write("<script src="+${g_contextPath}+"'assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
-</script>
+<script src="${g_contextPath}/assets/js/jquery-1.10.2.min.js"></script>
 <![endif]-->
 
 <script type="text/javascript">
-	if("ontouchend" in document) document.write("<script src="+${g_contextPath}+"'assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+	if("ontouchend" in document) document.write("<script src='${g_contextPath}/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 </script>
 <script src="${g_contextPath}/assets/js/bootstrap.min.js"></script>
 <script src="${g_contextPath}/assets/js/typeahead-bs2.min.js"></script>
 
-<!-- page specific plugin scripts -->
+<!-- page specific plugin scripts eg,jqgrid-->
+<script src="${g_contextPath}/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="${g_contextPath}/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="${g_contextPath}/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
 
 <!-- ace scripts -->
 <script src="${g_contextPath}/assets/js/ace-elements.min.js"></script>
 <script src="${g_contextPath}/assets/js/ace.min.js"></script>
-</head>
-<body>
-	
+<!-- inline scripts related to this page -->
+<script src="${g_contextPath}/module/system/role_init.js"></script>
 </body>
 </html>
