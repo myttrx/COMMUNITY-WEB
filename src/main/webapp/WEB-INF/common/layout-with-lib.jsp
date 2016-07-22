@@ -1,9 +1,4 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
 <!-- basic styles -->
 <link href="${g_contextPath}/assets/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="${g_contextPath}/assets/css/font-awesome.min.css" />
@@ -11,11 +6,16 @@
   <link rel="stylesheet" href="+${g_contextPath}+""assets/css/font-awesome-ie7.min.css" />
 <![endif]-->
 
-<!-- page specific plugin styles eg.jqgrid -->
-<link rel="stylesheet" href="${g_contextPath}/assets/css/jquery-ui-1.10.3.full.min.css" />
+<!-- page specific plugin styles eg.jqgrid ,Form Elements-->
+<link rel="stylesheet" href="${g_contextPath}/assets/css/jquery-ui-1.10.3.custom.min.css" />
+<link rel="stylesheet" href="${g_contextPath}/assets/css/chosen.css" />
 <link rel="stylesheet" href="${g_contextPath}/assets/css/datepicker.css" />
-<link rel="stylesheet" href="${g_contextPath}/assets/css/ui.jqgrid.css" />
+<link rel="stylesheet" href="${g_contextPath}/assets/css/bootstrap-timepicker.css" />
+<link rel="stylesheet" href="${g_contextPath}/assets/css/daterangepicker.css" />
+<link rel="stylesheet" href="${g_contextPath}/assets/css/colorpicker.css" />
 
+<link rel="stylesheet" href="${g_contextPath}/assets/css/jquery-ui-1.10.3.full.min.css" />
+<link rel="stylesheet" href="${g_contextPath}/assets/css/ui.jqgrid.css" />
 <!-- fonts -->
 
 <!-- ace styles -->
@@ -28,9 +28,7 @@
 <![endif]-->
 
 
-</head>
-<body>
-	
+
 <!-- ace settings handler -->
 <script src="${g_contextPath}/assets/js/ace-extra.min.js"></script>
 
@@ -56,13 +54,27 @@
 <script src="${g_contextPath}/assets/js/bootstrap.min.js"></script>
 <script src="${g_contextPath}/assets/js/typeahead-bs2.min.js"></script>
 
-<!-- page specific plugin scripts eg,jqgrid-->
+<!-- page specific plugin scripts eg,jqgrid,Form Elements-->
+<!--[if lte IE 8]>
+  <script src="${g_contextPath}/assets/js/excanvas.min.js"></script>
+<![endif]-->
 <script src="${g_contextPath}/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="${g_contextPath}/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="${g_contextPath}/assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="${g_contextPath}/assets/js/chosen.jquery.min.js"></script>
+<script src="${g_contextPath}/assets/js/fuelux/fuelux.spinner.min.js"></script>
+<script src="${g_contextPath}/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+<script src="${g_contextPath}/assets/js/date-time/moment.min.js"></script>
+<script src="${g_contextPath}/assets/js/date-time/daterangepicker.min.js"></script>
+<script src="${g_contextPath}/assets/js/bootstrap-colorpicker.min.js"></script>
+<script src="${g_contextPath}/assets/js/jquery.knob.min.js"></script>
+<script src="${g_contextPath}/assets/js/jquery.autosize.min.js"></script>
+<script src="${g_contextPath}/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+<script src="${g_contextPath}/assets/js/jquery.maskedinput.min.js"></script>
+<script src="${g_contextPath}/assets/js/bootstrap-tag.min.js"></script>
+
 <script src="${g_contextPath}/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
 <script src="${g_contextPath}/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-
 <!-- ace scripts -->
 <script src="${g_contextPath}/assets/js/ace-elements.min.js"></script>
 <script src="${g_contextPath}/assets/js/ace.min.js"></script>
-</body>
-</html>

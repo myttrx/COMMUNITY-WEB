@@ -1,12 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<div class="sidebar" id="sidebar">
+<div class="sidebar" id="sidebar">
 		<script type="text/javascript">
 			try {
 				ace.settings.check('sidebar', 'fixed')
@@ -42,7 +35,9 @@
 		<ul class="nav nav-list">
 			<li class="active"><a href="index.html"> <i class="icon-dashboard"></i> <span class="menu-text"> 控制台 </span>
 			</a></li>
-			
+			<li>
+				<a href="${g_contextPath}/system/codeTable/init.shtml"> <i class="icon-text-width"></i> <span class="menu-text">CodeTable管理</span></a>
+			</li>
 			<li>
 				<a href="${g_contextPath}/system/role/init.shtml"> <i class="icon-text-width"></i> <span class="menu-text">角色管理</span></a>
 			</li>
@@ -185,5 +180,3 @@
 			}
 		</script>
 	</div>
-</body>
-</html>

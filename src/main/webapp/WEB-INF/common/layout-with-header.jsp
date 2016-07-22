@@ -1,12 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<div class="navbar navbar-default" id="navbar">
+<div class="navbar navbar-default" id="navbar">
 		<script type="text/javascript">
 			try {
 				ace.settings.check('navbar', 'fixed')
@@ -127,7 +120,7 @@
 								</span>
 							</a></li>
 
-							<li><a href="#"> <img src="<${g_contextPath}/assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Bob:</span> 到底是不是英文 ...
+							<li><a href="#"> <img src="${g_contextPath}/assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" /> <span class="msg-body"> <span class="msg-title"> <span class="blue">Bob:</span> 到底是不是英文 ...
 									</span> <span class="msg-time"> <i class="icon-time"></i> <span>下午3:15</span>
 									</span>
 								</span>
@@ -160,5 +153,3 @@
 		</div>
 		<!-- /.container -->
 	</div>
-</body>
-</html>
