@@ -36,7 +36,7 @@
 			<li class="active"><a href="index.html"> <i class="icon-dashboard"></i> <span class="menu-text"> 控制台 </span>
 			</a></li>
 			<li>
-				<a href="${g_contextPath}/system/codeTable/init.shtml"> <i class="icon-text-width"></i> <span class="menu-text">CodeTable管理</span></a>
+				<a href="${g_contextPath}/system/codeTable/init.shtml"> <i class="icon-text-width"></i> <span class="menu-text">编码表管理</span></a>
 			</li>
 			<li>
 				<a href="${g_contextPath}/system/role/init.shtml"> <i class="icon-text-width"></i> <span class="menu-text">角色管理</span></a>

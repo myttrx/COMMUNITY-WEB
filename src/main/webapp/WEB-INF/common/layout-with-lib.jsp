@@ -78,3 +78,5 @@
 <!-- ace scripts -->
 <script src="${g_contextPath}/assets/js/ace-elements.min.js"></script>
 <script src="${g_contextPath}/assets/js/ace.min.js"></script>
+<!-- project scripts -->
+<script src="${g_contextPath}/assets/project/main.js"></script>
