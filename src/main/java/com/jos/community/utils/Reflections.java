@@ -59,9 +59,10 @@ public class Reflections {
 		Validate.notNull(obj, "object can't be null");
 		Validate.notBlank(fieldName, "fieldName can't be blank");
 		//子类获取不到方法，从父类中获取字段对应的方法
+		Field field = null;
 		for(Class<?> superClass =obj.getClass();superClass != Object.class ;superClass=superClass.getSuperclass()){
 			try {
-				Field field = superClass.getDeclaredField(fieldName);
+				field = superClass.getDeclaredField(fieldName);
 				makeAccessible(field);
 			} catch (SecurityException e) {
 				// TODO Auto-generated catch block
@@ -70,7 +71,7 @@ public class Reflections {
 				//not found , continue find in super class
 			}
 		}
-		return null;
+		return field;
 	}
 	
 	/**
