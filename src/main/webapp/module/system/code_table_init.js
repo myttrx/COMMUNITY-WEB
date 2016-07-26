@@ -1,36 +1,10 @@
-var grid_data = 
-[ 
-	{id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-	{id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-	{id:"3",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-	{id:"4",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-	{id:"5",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-	{id:"6",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-	{id:"7",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-	{id:"8",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-	{id:"9",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-	{id:"10",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-	{id:"11",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-	{id:"12",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-	{id:"13",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-	{id:"14",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-	{id:"15",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-	{id:"16",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-	{id:"17",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-	{id:"18",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-	{id:"19",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-	{id:"20",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-	{id:"21",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-	{id:"22",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-	{id:"23",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"}
-];	
-
 $(function($) {
 	
 	$("#btnSearch").click(function(){
 		var postData = $("#searchForm").form2json();
 		$("#codeTableGrid").jqGrid('setGridParam',{datatype:'json', postData : {searchForm: postData}}).trigger('reloadGrid');
 	});
+	
 	$("#codeTableType").chosen(); 
 
 	var $grid_selector = $("#codeTableGrid");
@@ -38,32 +12,25 @@ $(function($) {
     
     $grid_selector.jqGrid({
 		//direction: "rtl",
-    	url: g_contextPath +"",
-    	//postData : {searchForm: $("#searchForm").form2json()},
-		data: grid_data,
-		mtype: "POST",
-		datatype: "local",
-		colNames:[' ', 'Type','Code','Description', 'Modified Date'],
+    	url: g_contextPath +"/system/codeTable/search.shtml",
+    	postData : {searchForm: $("#searchForm").form2json()},
+		//data: grid_data,
+    	datatype: "local",
+        mtype: "POST",
+		colNames:[' Id ', 'Type','Code','Description', 'Modified Date'],
 		colModel:[
-			{name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
-				formatter:'actions',
-				formatoptions:{ 
-					keys:true,
-					delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
-					//editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
-				}
-			},
-			{name:'id',index:'id', width:1, sorttype:"int", editable: true},
-			{name:'sdate',index:'sdate',width:1, editable:true, sorttype:"date",unformat: pickDate},
-			{name:'name',index:'name', width:2,editable: true,editoptions:{size:"20",maxlength:"30"}},
-			{name:'stock',index:'stock', width:1, editable: true,edittype:"checkbox",editoptions: {value:"Yes:No"},unformat: aceSwitch}
+			{name:'codeTableId', width:1},
+			{name:'type', width:1},
+			{name:'code',width:1},
+			{name:'description',width:2},
+			{name:'modifiedDate',width:1}
 		], 
 		pager : pager_selector,
 		//toppager: true,
 		multiselect: true,
 		//multikey: "ctrlKey",
         multiboxonly: true,
-		loadComplete : defaultGridLoadComplete,
+		//loadComplete : defaultGridLoadComplete,
 		editurl: "/dummy.html",//nothing is saved
 		caption: "Code Table List",
 	});
@@ -106,9 +73,6 @@ $(function($) {
         title: "New Record",
         cursor: "pointer"
     });
-	
-	
-	
 	
 	function style_edit_form(form) {
 		//enable datepicker on "sdate" field and switches for "stock" field

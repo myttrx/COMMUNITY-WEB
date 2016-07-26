@@ -99,7 +99,9 @@
 
 				</form>
 
-				<table id="codeTableGrid"></table>
+				<table id="codeTableGrid" class="jqGrid">
+					
+				</table>
 
 				<div id="gridPager"></div>
 
