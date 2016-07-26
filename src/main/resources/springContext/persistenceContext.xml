@@ -13,7 +13,7 @@
 	default-lazy-init="true">
 
 	<jpa:repositories
-		base-package="com.jos.community.module.repository" />
+		base-package="com.jos.community.module.repository,com.jos.community.system.module.repository" />
 
 	<bean id="defaultPersistenceUnitManager"
 		class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
