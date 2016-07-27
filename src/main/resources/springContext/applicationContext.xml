@@ -21,9 +21,9 @@
 	<context:property-placeholder
 		ignore-unresolvable="true" location="classpath:/springContext/application.properties" />
 
-	<!-- SpringContext Holder 
-	<bean id="springContextHolder" class="com.josframework.core.utils.spring.SpringContextHolder" 
-		lazy-init="false" /> -->
+	<!-- SpringContext Holder -->
+	<bean id="springContextHolder" class="com.jos.community.utils.SpringContextHolder" 
+		lazy-init="false" /> 
 		
 	<!--
 	<bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller">
