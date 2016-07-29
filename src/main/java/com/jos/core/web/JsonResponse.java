@@ -27,8 +27,6 @@ public class JsonResponse extends BaseResponseEvent{
 	
 	private String singleMessage;
 
-	private Object errors = new Object();//Validation error message
-	
 	public List<Message> getMessages() {
 		return messages;
 	}
@@ -66,12 +64,4 @@ public class JsonResponse extends BaseResponseEvent{
 		this.addMessage(singleMessage);
 	}
 
-	public Object getErrors() {
-		return errors;
-	}
-
-	public void setErrors(Object errors) {
-		this.errors = errors;
-	}
-	
 }

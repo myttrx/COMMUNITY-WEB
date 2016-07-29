@@ -12,8 +12,9 @@ public abstract class BaseResponseEvent implements Serializable{
 	
 	private int status; //0-fails 1-success   2..99(success) remain, -1..-99(fail) remain , 100~199(success, -199..-100(fail) user custom defined code
 	
-	
 	private Object data;
+	
+	private Object errors;//Validation error message
 	
 	private String tag;
 	
@@ -68,6 +69,13 @@ public abstract class BaseResponseEvent implements Serializable{
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	
+
+	public Object getErrors() {
+		return errors;
+	}
+
+	public void setErrors(Object errors) {
+		this.errors = errors;
+	}
 	
 }
