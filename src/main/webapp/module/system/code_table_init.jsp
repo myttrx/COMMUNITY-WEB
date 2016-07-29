@@ -21,7 +21,6 @@
 		</script>
 
 		<ul class="breadcrumb">
-
 			<li><i class="icon-home home-icon"></i> <a href="#">Home</a></li>
 			<li><a href="#">Tables</a></li>
 			<li class="active">jqGrid plugin</li>
@@ -61,12 +60,7 @@
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1">Code Table Type</label>
 						<div class="col-sm-4">
 							<select class="width-40 chosen-select" id="codeTableType" name="codeTableType" data-placeholder="Please Choose One">
-								<option value="VT">Vermont</option>
-								<option value="VA">Virginia</option>
-								<option value="WA">Washington</option>
-								<option value="WV">West Virginia</option>
-								<option value="WI">Wisconsin</option>
-								<option value="WY">Wyoming</option>
+								${codeTableTypeOpts }
 							</select>
 						</div>
 					</div>
@@ -90,10 +84,10 @@
 					<div class="clearfix form-actions">
 						<div class="col-md-offset-3 col-md-9">
 							<button class="btn btn-purple btn-sm" type="button" id="btnSearch">
-								<i class="icon-search icon-on-right bigger-110">Search</i>
+								<i class="icon-search icon-on-right bigger-110"></i> <spring:message code="btn.search" />
 							</button>
 							&nbsp; &nbsp; &nbsp;
-							<button type="reset" class="btn btn-sm"><i class="icon-undo bigger-110"></i> Reset</button>
+							<button type="reset" class="btn btn-sm"><i class="icon-undo bigger-110"></i> <spring:message code="btn.reset" /></button>
 						</div>
 					</div>
 
@@ -113,6 +107,55 @@
 	</div>
 	<!-- /.page-content -->
 
+
+<div class="modal fade" id="code_table_modal_div" tabindex="-1" role="dialog" aria-labelledby="duplicate_case_label" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only"></span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Code Table</h4>
+			</div>
+			<div class="modal-body">
+				<form:form id="dataForm" modelAttribute="codeTableModel" class="form-horizontal" role="form">
+					<fieldset></fieldset>
+					<div class="form-group">
+						<label for="codeTableType" class="col-sm-3 control-label no-padding-right" >Code Table Type</label>
+						<div class="col-sm-8">
+							<form:select path="codeTableType" class="col-xs-10 col-sm-8 chosen-select" id="codeTableType" data-placeholder="Please Choose One">
+								${codeTableTypeOpts }
+							</form:select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="code" class="col-sm-3 control-label no-padding-right">Code</label>
+						<div class="col-sm-8">
+							<form:input path="code" type="text" class="col-xs-10 col-sm-8" placeholder="Code" id="code"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right">Description</label>
+						<div class="col-sm-8">
+							<form:input path="description" type="text" class="col-xs-10 col-sm-8" placeholder="Description" id="description"/>
+						</div>
+					</div>
+				</form:form>
+				
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-info btn-sm" type="button" id="btnSave">
+					<i class="icon-save icon-on-right bigger-110"></i> <spring:message code="btn.save" />
+				</button>
+				&nbsp; 
+				<button type="button" class="btn btn-sm" data-dismiss="modal">
+					<i class="icon-remove bigger-110"></i> 
+					<spring:message code="btn.close" />
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
 	<!-- inline scripts related to this page -->
 	<script src="${g_contextPath}/module/system/code_table_init.js"></script>
 </body>
