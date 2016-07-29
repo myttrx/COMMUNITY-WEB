@@ -1,4 +1,3 @@
-
 //global settings for jqgrid
 $.extend(jQuery.jgrid.defaults, {
     autowidth: true,
@@ -171,3 +170,96 @@ function paramString2obj (serializedParams) {
 
 	return obj;
 }
+
+$.fn.ajaxPostForm = function (url, success, fail) {
+    if (!this.length) {
+        log('ajaxPostForm: skipping submit process - no element selected');
+        return this;
+    }
+
+    var $form = this;
+
+    $form.ajaxSubmit({
+        url: url,
+        type: 'POST',
+        dataType: 'json',
+        success: function (data, status, xhr) {
+            if (data.success) {
+                //success(data);
+            } else if ($.isFunction(fail)) {
+                //fail(data);
+            } else if (data.tag === "ValidationError") {
+                processServerSideValidationError(data, $form);
+            } else {
+                //notifError(data.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            //notifError(error);
+        }
+    });
+}
+
+function processServerSideValidationError(response, form, summaryElement) {
+    var $list,
+        data = (response && response.errors) ? response : null;
+    if (!data) return false;
+    $list = summaryElement || getValidationSummary($(form));
+    $list.html('');
+    $.each(data.errors, function (index, item) {
+    	 var fieldName = item.field;
+    	 var $form = $(form), field = $form.find(':input[name="' + fieldName + '"]');
+    	 var $val, errorList = "", fieldId = field.length ? field[0].id.replace('.', '\\.') : "";
+    	 $form.find(".has-error").removeClass("has-error");
+         if (fieldName) {
+             $val = $form.find(".field-validation-valid,.field-validation-error")
+                         .first('[data-valmsg-for="' + fieldName + '"]')
+                         .removeClass("field-validation-valid")
+                         .addClass("field-validation-error");
+             $form.find("#" + fieldId).addClass("input-validation-error");
+             //$form.find("#" + fieldId).parentsUntil("div.form-group").parent().addClass("has-error");
+         }
+         if (!item.defaultMessage.length) return;
+         if ($val && $val.length) $val.text(item.defaultMessage);
+         if (fieldId) {
+             errorList += '<li><a title="click to view" href="javascript:setFocus(\'#' + form[0].id + '\',\'#' + fieldId + '\');" class="alert-warning">' + item.defaultMessage + '</a></li>';
+         } else {
+             errorList += '<li>' + val + '</li>';
+         }
+         $list.append(errorList);
+    });
+    if ($list.find("li:first").length) {
+        $list.closest("div").show();
+        scrollTo($list.parent().attr('id'));
+    }
+    return true;
+};
+
+function scrollTo(id) {
+    var navbarHeight = $('#navbar').height();
+    $('html,body').animate({
+        scrollTop: $("#" + id).offset().top - navbarHeight
+    }, 'fast');
+};
+
+function getValidationSummary($form) {
+    var $el;
+    if (typeof $form != 'undefined')
+        $el = $form.find('.alert.alert-block.alert-warning.validation-summary-errors');
+
+    if (typeof $el == 'undefined' || $el.length == 0) {
+        var $fieldset = $form.find('fieldset:first');
+        $el = $('<div id="validationSummary" class="alert alert-block alert-warning validation-summary-errors" data-valmsg-summary="true"><div><strong>Please fix the following errors.</strong></div><ol></ol></div>')
+                 .hide()
+                 .insertBefore($fieldset)
+                 .find('ol');
+    } else {
+        $el = $el.hide().find('ol');
+    }
+    return $el;
+};
+
+function setFocus(form,ele) {
+	$(form+' '+ele).focus();
+};
+
