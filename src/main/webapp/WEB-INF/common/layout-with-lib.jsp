@@ -75,6 +75,7 @@
 
 <script src="${g_contextPath}/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
 <script src="${g_contextPath}/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+<script src="${g_contextPath}/assets/js/jquery.form/jquery.form.js"></script>
 <!-- ace scripts -->
 <script src="${g_contextPath}/assets/js/ace-elements.min.js"></script>
 <script src="${g_contextPath}/assets/js/ace.min.js"></script>
