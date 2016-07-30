@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="+${g_contextPath}+""assets/css/font-awesome-ie7.min.css" />
 <![endif]-->
 
-<!-- page specific plugin styles eg.jqgrid ,Form Elements-->
+<!-- page specific plugin styles eg.jqgrid ,Form Elements,animate-->
 <link rel="stylesheet" href="${g_contextPath}/assets/css/jquery-ui-1.10.3.custom.min.css" />
 <link rel="stylesheet" href="${g_contextPath}/assets/css/chosen.css" />
 <link rel="stylesheet" href="${g_contextPath}/assets/css/datepicker.css" />
@@ -16,6 +16,7 @@
 
 <link rel="stylesheet" href="${g_contextPath}/assets/css/jquery-ui-1.10.3.full.min.css" />
 <link rel="stylesheet" href="${g_contextPath}/assets/css/ui.jqgrid.css" />
+<link rel="stylesheet" href="${g_contextPath}/assets/css/animate.css" />
 <!-- fonts -->
 
 <!-- ace styles -->
@@ -54,7 +55,7 @@
 <script src="${g_contextPath}/assets/js/bootstrap.min.js"></script>
 <script src="${g_contextPath}/assets/js/typeahead-bs2.min.js"></script>
 
-<!-- page specific plugin scripts eg,jqgrid,Form Elements-->
+<!-- page specific plugin scripts eg,jqgrid,Form Elements,bootstrap-notify-->
 <!--[if lte IE 8]>
   <script src="${g_contextPath}/assets/js/excanvas.min.js"></script>
 <![endif]-->
@@ -76,6 +77,8 @@
 <script src="${g_contextPath}/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
 <script src="${g_contextPath}/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
 <script src="${g_contextPath}/assets/js/jquery.form/jquery.form.js"></script>
+<script src="${g_contextPath}/assets/js/notify/bootstrap-notify.js"></script>
+<script src="${g_contextPath}/assets/js/notify/bootstrap-notify.min.js"></script>
 <!-- ace scripts -->
 <script src="${g_contextPath}/assets/js/ace-elements.min.js"></script>
 <script src="${g_contextPath}/assets/js/ace.min.js"></script>
