@@ -1,4 +1,5 @@
-//global settings for jqgrid
+//global settings 
+//for jqgrid
 $.extend(jQuery.jgrid.defaults, {
     autowidth: true,
     height: "100%",
@@ -185,13 +186,14 @@ $.fn.ajaxPostForm = function (url, success, fail) {
         dataType: 'json',
         success: function (data, status, xhr) {
             if (data.success) {
-                //success(data);
+            	removeValidationSummary();
+                success(data);
             } else if ($.isFunction(fail)) {
-                //fail(data);
+                fail(data);
             } else if (data.tag === "ValidationError") {
                 processServerSideValidationError(data, $form);
             } else {
-                //notifError(data.message);
+            	notifyError(data.singleMessage);
             }
         },
         error: function (xhr, status, error) {
@@ -199,6 +201,45 @@ $.fn.ajaxPostForm = function (url, success, fail) {
         }
     });
 }
+function notifyError(message) {
+	$.notify({
+		// options
+		icon: 'icon-warning-sign',
+		position:'static',
+		message: '<span class="bigger"><strong>'+message+'</strong></span>' 
+	},{
+		// settings
+		type: 'danger',
+		delay:'2000',
+		placement: {
+			from: "top",
+			align: "center"
+		},
+		z_index: 2031,
+	});
+};
+
+function notifySuccess(message) {
+	$.notify({
+		// options
+		icon: 'icon-ok',
+		position:'static',
+		message: '<span class="bigger"><strong>'+message+'</strong></span>'
+	},{
+		// settings
+		type: 'success',
+		delay:'1000',
+		placement: {
+			from: "top",
+			align: "right"
+		},
+		z_index: 2031,
+		animate: {
+			enter: 'animated fadeInRight',
+			exit: 'animated fadeOutRight'
+		},
+	});
+};
 
 function processServerSideValidationError(response, form, summaryElement) {
     var $list,
@@ -263,3 +304,40 @@ function setFocus(form,ele) {
 	$(form+' '+ele).focus();
 };
 
+function removeValidationSummary(){
+	$('#validationSummary').remove();
+}
+
+function initCustomDataApi() {
+    $("button[data-href]").click(function (e) {
+        e.preventDefault();
+        redirectTo($(this).data("href"));
+    });
+
+    $(".chosen-select").each(function (e) {
+        var $this = $(this), placeholder = $this.prop('placeholder') || " Please select ";
+
+        $this.chosen({
+            placeholder: placeholder,
+            allowClear: true
+        }).focus(function () {
+            $(this).chosen('focus');
+        });
+    });
+};
+
+function styleButton() {
+    var $btnSearch = $('.btn-purple');
+    $btnSearch.prepend('<i class="icon-search icon-on-right bigger-110"></i>');
+    var $btnReset = $('.btn-light');
+    $btnReset.prepend('<i class="icon-undo icon-on-right bigger-110"></i>');
+    var $btnSave = $('.btn-info');
+    $btnSave.prepend('<i class="icon-save icon-on-right bigger-110"></i>');
+    var $btnRemove = $('.btn-grey');
+    $btnRemove.prepend('<i class="icon-remove icon-on-right bigger-110"></i>');
+};
+
+$(function () {
+	initCustomDataApi();
+	styleButton();
+});
