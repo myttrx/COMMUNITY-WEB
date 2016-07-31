@@ -1,4 +1,4 @@
-//global settings 
+//global settings
 //for jqgrid
 $.extend(jQuery.jgrid.defaults, {
     autowidth: true,
@@ -197,7 +197,7 @@ $.fn.ajaxPostForm = function (url, success, fail) {
             }
         },
         error: function (xhr, status, error) {
-            //notifError(error);
+            notifyError(error);
         }
     });
 }
@@ -337,7 +337,29 @@ function styleButton() {
     $btnRemove.prepend('<i class="icon-remove icon-on-right bigger-110"></i>');
 };
 
+//for modal
+//when the modal is close , clear the validation message ,and clear the form
+function modalHiddenCallback(){
+	$(".modal").on('hidden.bs.modal', function () {
+		$('#validationSummary').remove();
+		var div = $(this);
+		$(this).find("form").each(function(i){
+			clearForm($(this));
+		});
+	});
+}
+function clearForm(formSelector) {
+    var $form = $(formSelector);
+    $form.find('input').val('');
+    $form.find(".chosen-select").val('');
+    $form.find(".chosen-select").trigger('chosen:updated');//update the option
+    //$form.find("label.checkbox-inline input[type=hidden]:first-child").checkboxVal(false);
+    $form.find('textarea').text('');
+    $form.find('textarea').val('');
+};
+
 $(function () {
 	initCustomDataApi();
 	styleButton();
+	modalHiddenCallback();
 });
