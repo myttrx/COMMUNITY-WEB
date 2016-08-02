@@ -21,6 +21,7 @@ import com.jos.community.utils.DynamicSpecifications;
 import com.jos.community.utils.SearchFilter;
 import com.jos.community.utils.SearchFilter.Operator;
 import com.jos.community.utils.StrUtils;
+import com.jos.security.core.EntityUtils;
 
 @Service
 @Transactional(readOnly=true)
@@ -37,7 +38,7 @@ public class CodeTableService {
 			filters =new ArrayList<SearchFilter>();
 			SearchFilter filter = null;
 			if (StrUtils.isNotBlank(codeTableModel.getCodeTableType())) {
-				filter = new SearchFilter("code", Operator.EQ, codeTableModel.getCodeTableType());
+				filter = new SearchFilter("type", Operator.EQ, codeTableModel.getCodeTableType());
 				filters.add(filter);
 			}
 			if (StrUtils.isNotBlank(codeTableModel.getCode())) {
@@ -68,5 +69,33 @@ public class CodeTableService {
 			page = new PageImpl<CodeTableGridRecordVo>(new ArrayList<CodeTableGridRecordVo>(), pageable, 0);
 		}
 		return page;
+	}
+	
+	@Transactional(readOnly = false)
+	public void save(CodeTableModel codeTableModel)throws Exception{
+		CodeTable codeTable = null;
+		if (StrUtils.isNotBlank(codeTableModel.getCodeTableId())) {
+			codeTable = this.codeTableRepo.findOne(Integer.valueOf(codeTableModel.getCodeTableId()));
+			EntityUtils.updateValue(codeTable);
+		}else {
+			codeTable = new CodeTable();
+			EntityUtils.insertValue(codeTable);
+		}
+		codeTable.setType(codeTableModel.getCodeTableType());
+		codeTable.setCode(codeTableModel.getCode());
+		codeTable.setDescription(codeTableModel.getDescription());
+		this.codeTableRepo.save(codeTable);
+	}
+	
+	public CodeTableModel findById(String id)throws Exception{
+		CodeTableModel codeTableModel = new CodeTableModel();
+		if (StrUtils.isNotBlank(id)) {
+			CodeTable codeTable = this.codeTableRepo.findOne(Integer.parseInt(id));
+			codeTableModel.setCodeTableId(id);
+			codeTableModel.setCode(codeTable.getCode());
+			codeTableModel.setCodeTableType(codeTable.getType());
+			codeTableModel.setDescription(codeTable.getDescription());
+		}
+		return codeTableModel;
 	}
 }

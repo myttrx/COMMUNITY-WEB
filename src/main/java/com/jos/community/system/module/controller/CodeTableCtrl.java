@@ -19,11 +19,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jos.community.module.service.MessageService;
 import com.jos.community.system.module.entity.CodeTableType;
 import com.jos.community.system.module.model.CodeTableModel;
 import com.jos.community.system.module.service.CodeTableService;
@@ -45,7 +47,8 @@ public class CodeTableCtrl {
 	@Autowired
 	@Qualifier(value = "codeTableValidator")
 	private Validator codeTableValidator;
-	
+	@Autowired
+	private MessageService messageService;
 	@Autowired
 	private CodeTableService codeTableService;
 	
@@ -105,6 +108,37 @@ public class CodeTableCtrl {
 			jsonResponse.setErrors(result.getFieldErrors());
 			return jsonResponse;
 		}
-		return null;
+		try {
+			this.codeTableService.save(codeTableModel);
+			jsonResponse.setSuccess();
+			jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.RECORD_SAVE_SUCCESS));
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResponse.setFail();
+			jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.SYSTEM_ERROR));
+		}
+		return jsonResponse;
 	}
+	
+	@RequestMapping(value="{id}/findCodeTable.shtml",method = RequestMethod.GET)
+	@ResponseBody
+	public JsonResponse findCodeTable(@PathVariable("id") String id){
+		JsonResponse jsonResponse = new JsonResponse();
+		if (StrUtils.isNotBlank(id)) {
+			try {
+				CodeTableModel codeTableModel = this.codeTableService.findById(id);
+				jsonResponse.setData(codeTableModel);
+				jsonResponse.setSuccess();
+			} catch (Exception e) {
+				e.printStackTrace();
+				jsonResponse.setFail();
+				jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.SYSTEM_ERROR));
+			}
+		}else {
+			jsonResponse.setFail();
+			jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.SYSTEM_ERROR));
+		}
+		return jsonResponse;
+	}
+	
 }

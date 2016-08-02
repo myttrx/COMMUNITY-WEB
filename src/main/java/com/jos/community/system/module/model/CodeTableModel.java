@@ -1,8 +1,8 @@
 package com.jos.community.system.module.model;
 
-
 public class CodeTableModel {
 
+	private String codeTableId;
 	private String code;
 	private String description;
 	private String codeTableType;
@@ -29,6 +29,14 @@ public class CodeTableModel {
 
 	public void setCodeTableType(String codeTableType) {
 		this.codeTableType = codeTableType;
+	}
+
+	public String getCodeTableId() {
+		return codeTableId;
+	}
+
+	public void setCodeTableId(String codeTableId) {
+		this.codeTableId = codeTableId;
 	}
 
 }
