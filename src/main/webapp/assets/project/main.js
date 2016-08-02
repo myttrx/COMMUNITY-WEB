@@ -356,6 +356,10 @@ function initCustomDataApi() {
             $(this).chosen('focus');
         });
     });
+    
+    $("button[type='reset']").click(function (e) {
+    	clearForm("#"+this.form.id);
+    });
 };
 
 function styleButton() {
