@@ -201,6 +201,38 @@ $.fn.ajaxPostForm = function (url, success, fail) {
         }
     });
 }
+
+function ajaxGet(url, data, success, fail, type) {
+    // shift arguments if data argument was omitted
+    if ($.isFunction(data)) {
+        type = type || fail || success;
+        fail = success;
+        success = data;
+        data = undefined;
+    }
+
+    return $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "json",
+        data: data,
+        success: function (data, status, xhr) {
+            if (data.success) {
+                success(data);
+            } else if (data.tag === "ValidationError") {
+                processServerSideValidationError(data);
+            } else if ($.isFunction(fail)) {
+                fail(data);
+            } else {
+            	notifyError(data.singleMessage);
+            }
+        },
+        error: function (xhr, status, error) {
+        	notifyError(error);
+        }
+    });
+};
+
 function notifyError(message) {
 	$.notify({
 		// options
