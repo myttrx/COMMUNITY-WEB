@@ -10,15 +10,12 @@ $(function($) {
 		var actionUrl = g_contextPath +"/system/codeTable/save.shtml";
         $form.ajaxPostForm(actionUrl,
              function (response) {
-        		
-//                 notifSuccess(response.message);
-//                 var actionUrl = editEnquiryComplaintUrl.replace("-1", response.data);
-//                 window.location = actionUrl;
+        		$('#code_table_modal_div').modal('hide');
+				notifySuccess(response.singleMessage);
+				$("#codeTableGrid").jqGrid('setGridParam',{datatype:'json', postData : {searchForm: $("#searchForm").form2json()}}).trigger('reloadGrid');
              }
         );
 	});
-	
-	$("#searchForm #codeTableType").chosen();
 	
 
 	var $grid_selector = $("#codeTableGrid");
@@ -45,8 +42,19 @@ $(function($) {
 		//multikey: "ctrlKey",
         multiboxonly: true,
 		//loadComplete : defaultGridLoadComplete,
-		editurl: "/dummy.html",//nothing is saved
 		caption: "Code Table List",
+        ondblClickRow: function (rowId, iRow, iCol, e) {
+            var data = $grid_selector.jqGrid('getRowData', rowId);
+            id = data.codeTableId;
+            var findCodeTableUrl = g_contextPath +"/system/codeTable/id/findCodeTable.shtml";
+            var actionUrl = findCodeTableUrl.replace("id", id);
+            ajaxGet(actionUrl,
+                function (response) {
+            		loadDetails(response.data);
+                }
+            );
+
+        }
 	});
 
 	$grid_selector.jqGrid('navGrid', pager_selector, {
@@ -71,9 +79,14 @@ $(function($) {
 		displayInput();
 	}
 
-	$('#code_table_modal_div').on('shown.bs.modal', function () {
-		$("#dataForm #codeTableType").chosen(); 
-	})
+	function loadDetails(data){
+		$("#dataForm #codeTableId").val(data.codeTableId);
+		$("#dataForm #codeTableType").val(data.codeTableType);
+		$("#dataForm #codeTableType").trigger('chosen:updated');
+		$("#dataForm #code").val(data.code);
+		$("#dataForm #description").val(data.description);
+		displayInput();
+	}
 });
 
 function displayInput() {

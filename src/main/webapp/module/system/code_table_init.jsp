@@ -59,7 +59,7 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="form-field-1">Code Table Type</label>
 						<div class="col-sm-4">
-							<select class="width-40 chosen-select" id="codeTableType" name="codeTableType" data-placeholder="Please Choose One">
+							<select class="width-60 chosen-select" id="codeTableType" name="codeTableType" data-placeholder="Please Choose One">
 								${codeTableTypeOpts }
 							</select>
 						</div>
@@ -69,7 +69,7 @@
 						<label for="form-field-1" class="col-sm-3 control-label no-padding-right">Code</label>
 
 						<div class="col-sm-4">
-							<input type="text" class="col-xs-10 col-sm-5" placeholder="Code" id="code" name="code">
+							<input type="text" class="col-xs-10 col-sm-7" placeholder="Code" id="code" name="code">
 						</div>
 					</div>
 
@@ -77,17 +77,19 @@
 						<label for="form-field-1" class="col-sm-3 control-label no-padding-right">Description</label>
 
 						<div class="col-sm-4">
-							<input type="text" class="col-xs-10 col-sm-5" placeholder="Description" id="description" name="description">
+							<input type="text" class="col-xs-10 col-sm-7" placeholder="Description" id="description" name="description">
 						</div>
 					</div>
 
 					<div class="clearfix form-actions">
 						<div class="col-md-offset-3 col-md-9">
 							<button class="btn btn-purple btn-sm" type="button" id="btnSearch">
-								<i class="icon-search icon-on-right bigger-110"></i> <spring:message code="btn.search" />
+								<spring:message code="btn.search" />
 							</button>
 							&nbsp; &nbsp; &nbsp;
-							<button type="reset" class="btn btn-sm"><i class="icon-undo bigger-110"></i> <spring:message code="btn.reset" /></button>
+							<button type="reset" class="btn btn-light btn-sm">
+								<spring:message code="btn.reset" />
+							</button>
 						</div>
 					</div>
 
@@ -120,10 +122,11 @@
 			<div class="modal-body">
 				<form:form id="dataForm" modelAttribute="codeTableModel" class="form-horizontal" role="form">
 					<fieldset></fieldset>
+					<form:input path="codeTableId" type="text" class="col-xs-10 col-sm-8" id="codeTableId" cssStyle="display: none;" />
 					<div class="form-group">
 						<label for="codeTableType" class="col-sm-3 control-label no-padding-right" >Code Table Type</label>
 						<div class="col-sm-8">
-							<form:select path="codeTableType" class="col-xs-10 col-sm-8 chosen-select" id="codeTableType" data-placeholder="Please Choose One">
+							<form:select path="codeTableType" class="width-70 chosen-select" id="codeTableType" data-placeholder="Please Choose One">
 								${codeTableTypeOpts }
 							</form:select>
 						</div>
@@ -131,13 +134,13 @@
 					<div class="form-group">
 						<label for="code" class="col-sm-3 control-label no-padding-right">Code</label>
 						<div class="col-sm-8">
-							<form:input path="code" type="text" class="col-xs-10 col-sm-8" placeholder="Code" id="code"/>
+							<form:input path="code" type="text" class="col-xs-10 col-sm-8" placeholder="Code" id="code" maxlength="20"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right">Description</label>
 						<div class="col-sm-8">
-							<form:input path="description" type="text" class="col-xs-10 col-sm-8" placeholder="Description" id="description"/>
+							<form:input path="description" type="text" class="col-xs-10 col-sm-8" placeholder="Description" id="description" maxlength="100"/>
 						</div>
 					</div>
 				</form:form>
@@ -145,11 +148,10 @@
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-info btn-sm" type="button" id="btnSave">
-					<i class="icon-save icon-on-right bigger-110"></i> <spring:message code="btn.save" />
+					<spring:message code="btn.save" />
 				</button>
 				&nbsp; 
-				<button type="button" class="btn btn-sm" data-dismiss="modal">
-					<i class="icon-remove bigger-110"></i> 
+				<button type="button" class="btn btn-grey btn-sm" data-dismiss="modal">
 					<spring:message code="btn.close" />
 				</button>
 			</div>
