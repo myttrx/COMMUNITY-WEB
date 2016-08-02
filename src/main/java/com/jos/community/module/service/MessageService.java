@@ -19,6 +19,8 @@ public class MessageService implements MessageSource{
 	@Autowired
 	private MessageSource messageSource;
 	
+	private final static String DEFAULT_MESSAGE="No resource information, please contact the system administrator to add.";
+	
 	public String getMessage(String code, Object[] args, String defaultMessage,
 			Locale locale) {
 		return messageSource.getMessage(code, args, defaultMessage, locale);
@@ -43,5 +45,9 @@ public class MessageService implements MessageSource{
 	
 	public String getMessage(String code, String defaultMessage) {
 		return this.getMessage(code, null, defaultMessage);
+	}
+	
+	public String getMessage(String code) {
+		return this.getMessage(code, null, DEFAULT_MESSAGE);
 	}
 }
