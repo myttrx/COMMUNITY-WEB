@@ -1,4 +1,4 @@
-//global settings
+ //global settings
 //for jqgrid
 $.extend(jQuery.jgrid.defaults, {
     autowidth: true,
@@ -38,6 +38,53 @@ $.extend(jQuery.jgrid.search, {
     caption: "Advanced Search"
 });
 
+//for blockUI
+$.blockUI.defaults.message = '<h2><img src="'+g_contextPath+'/assets/images/loading.gif" />&nbsp;&nbsp;Processing...</h2>';
+$.blockUI.defaults.baseZ = 2000;
+$.blockUI.defaults.fadeIn = 0;
+$.blockUI.defaults.fadeOut = 0;
+$(document).ajaxStart(function () {
+    $.blockUI();
+}).ajaxStop(function () {
+    $.unblockUI();
+});
+
+function afterDeleteSubmit(response, postData) {
+	var result = eval('(' + response.responseText+ ')');
+	if(!result.success){
+		notifyError(result.singleMessage);
+	}else{
+		notifySuccess(result.singleMessage);
+	}
+	return [true, ''];
+};
+
+function getSelStrByName($grid,fieldName){
+	var selectedIDs = $grid.getGridParam("selarrrow");
+	var result = "";
+	for (var i = 0; i < selectedIDs.length; i++) {
+		var rowDatas =  $grid.jqGrid('getRowData', selectedIDs[i]);
+		result += rowDatas[fieldName]+",";
+	}
+	return result;
+}
+
+function beforeDeleteCallback(e) {
+    var form = $(e[0]);
+    if (form.data('styled')) return false;
+
+    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+    styleDeleteForm(form);
+
+    form.data('styled', true);
+};
+
+function styleDeleteForm(form) {
+	var buttons = form.next().find('.EditButton .fm-button');
+	buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
+	buttons.eq(0).addClass('btn-danger').prepend('<i class="icon-trash"></i>');
+	buttons.eq(1).prepend('<i class="icon-remove"></i>')
+};
 
 function defaultGridLoadComplete(grid) {
     setTimeout(function() {
@@ -260,7 +307,7 @@ function notifySuccess(message) {
 	},{
 		// settings
 		type: 'success',
-		delay:'1000',
+		delay:'2000',
 		placement: {
 			from: "top",
 			align: "right"
