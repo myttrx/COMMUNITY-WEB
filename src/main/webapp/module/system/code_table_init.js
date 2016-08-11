@@ -61,7 +61,16 @@ $(function($) {
         //navbar options
         search: true,
         refresh: true,
-    }, {}, {}, {}, {
+        del:true,
+    }, {}, {}, {
+    	recreateForm: true,
+		beforeShowForm : beforeDeleteCallback,
+		onclickSubmit: function(options, rowId) {
+			var ids = getSelStrByName($grid_selector,"codeTableId");
+            options.url = "deleteCodeTable.shtml?ids="+ids;
+        },
+        afterSubmit: afterDeleteSubmit,
+    }, {
         //search form
         recreateForm: true,
         //afterShowSearch: defaultSearchFormAfterShowSearch,
