@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,6 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jos.community.system.module.controller.CodeTableCtrl;
 import com.jos.community.system.module.entity.CodeTable;
 import com.jos.community.system.module.model.CodeTableModel;
 import com.jos.community.system.module.repository.CodeTableRepository;
@@ -27,6 +30,7 @@ import com.jos.security.core.EntityUtils;
 @Transactional(readOnly=true)
 public class CodeTableService {
 
+	protected static Logger logger = LoggerFactory.getLogger(CodeTableService.class);
 	@Autowired
 	private CodeTableRepository codeTableRepo;
 	
@@ -97,5 +101,18 @@ public class CodeTableService {
 			codeTableModel.setDescription(codeTable.getDescription());
 		}
 		return codeTableModel;
+	}
+	
+	@Transactional(readOnly = false)
+	public void deleteByIds(String ids)throws Exception{
+		if (StrUtils.isNotBlank(ids)) {
+			String [] idArray = ids.split(",");
+			for(String id : idArray){
+				this.codeTableRepo.delete(Integer.parseInt(id));
+			}
+		}else {
+			throw new Exception("Call function CodeTableService.deleteByIds ,Id can not be null.");
+		}
+		
 	}
 }

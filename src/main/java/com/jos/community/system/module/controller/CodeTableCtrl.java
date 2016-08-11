@@ -141,4 +141,19 @@ public class CodeTableCtrl {
 		return jsonResponse;
 	}
 	
+	@RequestMapping(value="deleteCodeTable.shtml",method = RequestMethod.POST)
+	@ResponseBody
+	public JsonResponse deleteCodeTable(@RequestParam(value = "ids", defaultValue = "") String ids){
+		JsonResponse jsonResponse = new JsonResponse();
+		try {
+			this.codeTableService.deleteByIds(ids);
+			jsonResponse.setSuccess();
+			jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.RECORD_DELETE_SUCCESS));
+		} catch (Exception e) {
+			jsonResponse.setFail();
+			jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.SYSTEM_ERROR));
+			e.printStackTrace();
+		}
+		return jsonResponse;
+	}
 }
