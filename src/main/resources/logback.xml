@@ -36,6 +36,13 @@
 	<logger name="org.springframework" level="debug" />
 	<logger name="org.springframework" level="info" />
 	<logger name="org.springframework.beans" level="info" />
+	<!-- show parameters for hibernate sql -->  
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder"  level="TRACE" />  
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor"  level="DEBUG" />  
+    <logger name="org.hibernate.SQL" level="DEBUG" />
+    <logger name="org.hibernate.type" level="TRACE" />
+    <logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />  
+    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />
 <!-- 	<logger name="org.activiti.engine.impl.persistence.entity" level="DEBUG" /> -->
 
 	<root level="WARN">
