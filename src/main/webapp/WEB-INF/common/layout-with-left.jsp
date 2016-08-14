@@ -39,6 +39,9 @@
 				<a href="${g_contextPath}/system/codeTable/init.shtml"> <i class="icon-text-width"></i> <span class="menu-text">编码表管理</span></a>
 			</li>
 			<li>
+				<a href="${g_contextPath}/system/codeTable/init.shtml"> <i class="icon-text-width"></i> <span class="menu-text">系统资源管理</span></a>
+			</li>
+			<li>
 				<a href="${g_contextPath}/system/role/init.shtml"> <i class="icon-text-width"></i> <span class="menu-text">角色管理</span></a>
 			</li>
 
