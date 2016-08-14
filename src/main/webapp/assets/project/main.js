@@ -12,7 +12,7 @@ $.extend(jQuery.jgrid.defaults, {
     toppager: false,
     multiselect: false,
     //multikey: "ctrlKey",
-    multiboxonly: false
+    multiboxonly: false,
 });
 $.extend(jQuery.jgrid.nav, {
     editicon: 'icon-pencil blue',
@@ -31,7 +31,7 @@ $.extend(jQuery.jgrid.nav, {
 $.extend(jQuery.jgrid.search, {
     sopt: ['eq', 'bw', 'ew', 'cn'],
     multipleSearch: true,
-    multipleGroup: true,
+    multipleGroup: false,
     showQuery: false,
     closeOnEscape: true,
     closeAfterSearch: true,
@@ -407,6 +407,17 @@ function initCustomDataApi() {
     $("button[type='reset']").click(function (e) {
     	clearForm("#"+this.form.id);
     });
+    //adapter the screen width
+    $(".jqGrid").each(function (e) {
+    	var $grid_selector = $(this);
+    	$(window).resize(function() {
+			$(window).unbind("onresize");
+			$grid_selector.jqGrid().setGridWidth($(".page-content").width());
+			$(window).bind("onresize", this);
+		});
+    });
+    
+	
 };
 
 function styleButton() {

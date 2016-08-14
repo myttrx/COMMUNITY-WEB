@@ -41,7 +41,7 @@ $(function($) {
 		multiselect: true,
 		//multikey: "ctrlKey",
         multiboxonly: true,
-		//loadComplete : defaultGridLoadComplete,
+		loadComplete : defaultGridLoadComplete,
 		caption: "Code Table List",
         ondblClickRow: function (rowId, iRow, iCol, e) {
             var data = $grid_selector.jqGrid('getRowData', rowId);
@@ -59,7 +59,7 @@ $(function($) {
 
 	$grid_selector.jqGrid('navGrid', pager_selector, {
         //navbar options
-        search: true,
+        search: false,
         refresh: true,
         del:true,
     }, {}, {}, {

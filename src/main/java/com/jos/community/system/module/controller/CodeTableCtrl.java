@@ -1,6 +1,11 @@
 package com.jos.community.system.module.controller;
 
 
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.DeserializationConfig.Feature;
 import org.slf4j.Logger;
@@ -72,8 +77,15 @@ public class CodeTableCtrl {
 			@RequestParam(value = "rows", defaultValue = "10") int rows,
 			@RequestParam(value = "sidx", defaultValue = "") String sidx,
 			@RequestParam(value = "sord", defaultValue = "") String sord,
-			@RequestParam(value = "searchForm", defaultValue = "") String searchForm){
+			@RequestParam(value = "filters", defaultValue = "") String filters,
+			@RequestParam(value = "searchForm", defaultValue = "") String searchForm,HttpServletRequest request){
 		CodeTableModel codeTableModel = null;
+//		Set<Object> set = request.getParameterMap().keySet();
+//		for(Object key : set){
+//			System.out.println("key : "+key +" value : ");
+//			Object o = request.getParameterMap().get(key);
+//			System.out.println("value : "+o.toString());
+//		}
 		try {
 			objectMapper.configure(Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			codeTableModel = objectMapper.readValue(searchForm, CodeTableModel.class);
