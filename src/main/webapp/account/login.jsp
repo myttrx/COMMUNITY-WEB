@@ -92,8 +92,8 @@
 												<p class="text-danger "><form:errors path="password" cssClass="error" /></p>
 												
 												<label class="block clearfix"> 
-													<span class="block input-icon input-icon-right form-inline"> 
-														<form:input path="captcha" id="captcha" class="input-medium form-control"  placeholder="Verify Code" maxlength="4"/>
+													<span class="block form-inline"> 
+														<form:input path="captcha" id="captcha" class="input-small form-control"  placeholder="Verify Code" maxlength="4"/>
 														<img alt="" src="${g_contextPath}/kaptcha/getKaptchaImage.shtml" id="kaptchaImage" name="kaptchaImage">
 													</span>
 													

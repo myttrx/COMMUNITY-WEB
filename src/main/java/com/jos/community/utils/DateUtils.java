@@ -2,6 +2,7 @@ package com.jos.community.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -69,5 +70,19 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils{
 			e.printStackTrace();
 		}
 		return date;
+	}
+	
+	public static Date getLastMonthFirstDay(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -1);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		return calendar.getTime();
+	}
+	
+	public static Date getLastMonthLastDay(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_MONTH, 1); 
+		calendar.add(Calendar.DATE, -1);
+		return calendar.getTime();
 	}
 }

@@ -224,7 +224,6 @@ $.fn.ajaxPostForm = function (url, success, fail) {
         log('ajaxPostForm: skipping submit process - no element selected');
         return this;
     }
-
     var $form = this;
 
     $form.ajaxSubmit({

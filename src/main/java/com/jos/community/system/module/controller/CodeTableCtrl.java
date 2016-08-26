@@ -78,7 +78,7 @@ public class CodeTableCtrl {
 			@RequestParam(value = "sidx", defaultValue = "") String sidx,
 			@RequestParam(value = "sord", defaultValue = "") String sord,
 			@RequestParam(value = "filters", defaultValue = "") String filters,
-			@RequestParam(value = "searchForm", defaultValue = "") String searchForm,HttpServletRequest request){
+			@RequestParam(value = "searchForm", defaultValue = "") String searchForm){
 		CodeTableModel codeTableModel = null;
 //		Set<Object> set = request.getParameterMap().keySet();
 //		for(Object key : set){

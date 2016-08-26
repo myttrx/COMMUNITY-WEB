@@ -19,6 +19,7 @@ import com.jos.community.system.module.entity.CodeTable;
 import com.jos.community.system.module.model.CodeTableModel;
 import com.jos.community.system.module.repository.CodeTableRepository;
 import com.jos.community.system.module.vo.CodeTableGridRecordVo;
+import com.jos.community.utils.Constant;
 import com.jos.community.utils.DateUtils;
 import com.jos.community.utils.DynamicSpecifications;
 import com.jos.community.utils.SearchFilter;
@@ -113,6 +114,34 @@ public class CodeTableService {
 		}else {
 			throw new Exception("Call function CodeTableService.deleteByIds ,Id can not be null.");
 		}
-		
+	}
+	
+	public List<CodeTable> findByType(String type){
+		Collection<SearchFilter> filters = null;
+		Specification<CodeTable> spec = null;
+		filters =new ArrayList<SearchFilter>();
+		SearchFilter filter = null;
+		filter = new SearchFilter("type", Operator.EQ, type);
+		filters.add(filter);
+		spec = DynamicSpecifications.bySearchFilter(filters,CodeTable.class);
+		return this.codeTableRepo.findAll(spec);
+	}
+	
+	public String findDesc(String type,String code){
+		CodeTable codeTable = this.findOne(type, code);
+		return codeTable!=null ? codeTable.getDescription() : "";
+	}
+	
+	public CodeTable findOne(String type,String code){
+		Collection<SearchFilter> filters = null;
+		Specification<CodeTable> spec = null;
+		filters =new ArrayList<SearchFilter>();
+		SearchFilter filter = null;
+		filter = new SearchFilter("type", Operator.EQ, type);
+		filters.add(filter);
+		filter = new SearchFilter("code", Operator.EQ, code);
+		filters.add(filter);
+		spec = DynamicSpecifications.bySearchFilter(filters,CodeTable.class);
+		return this.codeTableRepo.findOne(spec);
 	}
 }

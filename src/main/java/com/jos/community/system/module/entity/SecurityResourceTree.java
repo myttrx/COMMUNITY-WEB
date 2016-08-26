@@ -6,47 +6,45 @@ import javax.persistence.*;
 
 import java.util.List;
 
-
 /**
  * The persistent class for the security_resource_tree database table.
  * 
  */
 @Entity
-@Table(name="security_resource_tree")
-@NamedQuery(name="SecurityResourceTree.findAll", query="SELECT s FROM SecurityResourceTree s")
+@Table(name = "security_resource_tree")
+@NamedQuery(name = "SecurityResourceTree.findAll", query = "SELECT s FROM SecurityResourceTree s")
 public class SecurityResourceTree implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "tree_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int treeId;
 
-	@Column(name="node_desc")
+	@Column(name = "node_desc")
 	private String nodeDesc;
 
-	@Column(name="node_level")
+	@Column(name = "node_level")
 	private int nodeLevel;
 
-	@Column(name="node_name")
+	@Column(name = "node_name")
 	private String nodeName;
 
-	@Column(name="node_order")
+	@Column(name = "node_order")
 	private int nodeOrder;
 
-	//bi-directional many-to-one association to SecurityResource
+	// bi-directional many-to-one association to SecurityResource
 	@ManyToOne
-	@JoinColumn(name="resource_id")
+	@JoinColumn(name = "resource_id")
 	private SecurityResource securityResource;
 
-	//bi-directional many-to-one association to SecurityResourceTree
+	// bi-directional many-to-one association to SecurityResourceTree
 	@ManyToOne
-	@JoinColumn(name="parent_id")
-	private SecurityResourceTree securityResourceTree;
+	@JoinColumn(name = "parent_id")
+	private SecurityResourceTree parentResourceTree;
 
-	//bi-directional many-to-one association to SecurityResourceTree
-	@OneToMany(mappedBy="securityResourceTree")
-	private List<SecurityResourceTree> securityResourceTrees;
+	// bi-directional many-to-one association to SecurityResourceTree
+	@OneToMany(mappedBy = "parentResourceTree")
+	private List<SecurityResourceTree> childrenResourceTrees;
 
 	public SecurityResourceTree() {
 	}
@@ -99,34 +97,21 @@ public class SecurityResourceTree implements Serializable {
 		this.securityResource = securityResource;
 	}
 
-	public SecurityResourceTree getSecurityResourceTree() {
-		return this.securityResourceTree;
+	public SecurityResourceTree getParentResourceTree() {
+		return parentResourceTree;
 	}
 
-	public void setSecurityResourceTree(SecurityResourceTree securityResourceTree) {
-		this.securityResourceTree = securityResourceTree;
+	public void setParentResourceTree(SecurityResourceTree parentResourceTree) {
+		this.parentResourceTree = parentResourceTree;
 	}
 
-	public List<SecurityResourceTree> getSecurityResourceTrees() {
-		return this.securityResourceTrees;
+	public List<SecurityResourceTree> getChildrenResourceTrees() {
+		return childrenResourceTrees;
 	}
 
-	public void setSecurityResourceTrees(List<SecurityResourceTree> securityResourceTrees) {
-		this.securityResourceTrees = securityResourceTrees;
-	}
-
-	public SecurityResourceTree addSecurityResourceTree(SecurityResourceTree securityResourceTree) {
-		getSecurityResourceTrees().add(securityResourceTree);
-		securityResourceTree.setSecurityResourceTree(this);
-
-		return securityResourceTree;
-	}
-
-	public SecurityResourceTree removeSecurityResourceTree(SecurityResourceTree securityResourceTree) {
-		getSecurityResourceTrees().remove(securityResourceTree);
-		securityResourceTree.setSecurityResourceTree(null);
-
-		return securityResourceTree;
+	public void setChildrenResourceTrees(
+			List<SecurityResourceTree> childrenResourceTrees) {
+		this.childrenResourceTrees = childrenResourceTrees;
 	}
 
 }

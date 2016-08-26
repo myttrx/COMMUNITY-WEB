@@ -111,7 +111,7 @@
 					<fieldset></fieldset>
 					<form:input path="codeTableId" type="text" class="col-xs-10 col-sm-8" id="codeTableId" cssStyle="display: none;" />
 					<div class="form-group">
-						<label for="codeTableType" class="col-sm-3 control-label no-padding-right" >Code Table Type</label>
+						<label for="codeTableType" class="col-sm-3 control-label no-padding-right" >Code Table Type<spring:message code="mandatorySymbol"/></label>
 						<div class="col-sm-8">
 							<form:select path="codeTableType" class="width-70 chosen-select" id="codeTableType" data-placeholder="Please Choose One">
 								${codeTableTypeOpts }
@@ -119,13 +119,13 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="code" class="col-sm-3 control-label no-padding-right">Code</label>
+						<label for="code" class="col-sm-3 control-label no-padding-right">Code<spring:message code="mandatorySymbol"/></label>
 						<div class="col-sm-8">
 							<form:input path="code" type="text" class="col-xs-10 col-sm-8" placeholder="Code" id="code" maxlength="20"/>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right">Description</label>
+						<label class="col-sm-3 control-label no-padding-right">Description<spring:message code="mandatorySymbol"/></label>
 						<div class="col-sm-8">
 							<form:input path="description" type="text" class="col-xs-10 col-sm-8" placeholder="Description" id="description" maxlength="100"/>
 						</div>

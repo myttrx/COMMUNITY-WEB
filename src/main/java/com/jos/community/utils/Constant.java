@@ -12,4 +12,9 @@ public class Constant {
 		public final static String RECORD_SAVE_SUCCESS = "record.save.success";
 		public final static String RECORD_DELETE_SUCCESS = "record.delete.success";
 	}
+	
+	public static class CodeTableType{
+		public final static String ROLE = "ROLE";
+		public final static String RESOURCE = "RESOURCE";
+	}
 }
