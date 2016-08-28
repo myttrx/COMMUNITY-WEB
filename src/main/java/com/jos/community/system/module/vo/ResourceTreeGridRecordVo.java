@@ -3,7 +3,7 @@ package com.jos.community.system.module.vo;
 public class ResourceTreeGridRecordVo {
 
 	private String nodeName;
-	private String resourceContent;
+	private String nodeDesc;
 	private String parentNodeName;
 	private int nodeOrder;
 	private int treeId;
@@ -16,12 +16,12 @@ public class ResourceTreeGridRecordVo {
 		this.nodeName = nodeName;
 	}
 
-	public String getResourceContent() {
-		return resourceContent;
+	public String getNodeDesc() {
+		return nodeDesc;
 	}
 
-	public void setResourceContent(String resourceContent) {
-		this.resourceContent = resourceContent;
+	public void setNodeDesc(String nodeDesc) {
+		this.nodeDesc = nodeDesc;
 	}
 
 	public String getParentNodeName() {

@@ -2,6 +2,7 @@ package com.jos.community.system.module.model;
 
 public class ResourceModel {
 
+	private String resourceId;
 	private String resourceName;
 	private String resourceType;
 	private String resourceContent;
@@ -46,6 +47,14 @@ public class ResourceModel {
 
 	public void setResourceOrder(String resourceOrder) {
 		this.resourceOrder = resourceOrder;
+	}
+
+	public String getResourceId() {
+		return resourceId;
+	}
+
+	public void setResourceId(String resourceId) {
+		this.resourceId = resourceId;
 	}
 
 }

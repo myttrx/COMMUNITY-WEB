@@ -16,6 +16,7 @@ import com.jos.community.system.module.entity.CodeTable;
 import com.jos.community.system.module.entity.SecurityResource;
 import com.jos.community.system.module.entity.SecurityResourceTree;
 import com.jos.community.system.module.model.ResourceModel;
+import com.jos.community.system.module.model.ResourceTreeModel;
 import com.jos.community.system.module.repository.ResourceRepository;
 import com.jos.community.system.module.repository.ResourceTreeRepository;
 import com.jos.community.system.module.vo.CodeTableGridRecordVo;
@@ -40,16 +41,23 @@ public class ResourceService {
 	@Autowired
 	private CodeTableService codeTableService;
 	
-	public Page<ResourceTreeGridRecordVo> searchResourceTree(Pageable pageable){
+	public Page<ResourceTreeGridRecordVo> searchResourceTree(Pageable pageable,int resourceId){
+		Collection<SearchFilter> filters = null;
+		Specification<SecurityResourceTree> spec = null;
+		filters =new ArrayList<SearchFilter>();
+		SearchFilter filter = null;
+		filter = new SearchFilter("securityResource.id", Operator.EQ, resourceId);
+		filters.add(filter);
+		spec = DynamicSpecifications.bySearchFilter(filters,SecurityResourceTree.class);
 		Page<ResourceTreeGridRecordVo> page = null;
-		Page<SecurityResourceTree> result = this.resourceTreeRepo.findAll(pageable);
+		Page<SecurityResourceTree> result = this.resourceTreeRepo.findAll(spec,pageable);
 		if (result!=null && result.getContent().size()>0) {
 			List<SecurityResourceTree> resultList = result.getContent();
 			List<ResourceTreeGridRecordVo> gridRecordVoList = new ArrayList<ResourceTreeGridRecordVo>();
 			for(SecurityResourceTree resourceTree : resultList){
 				ResourceTreeGridRecordVo gridRecordVo = new ResourceTreeGridRecordVo();
 				gridRecordVo.setNodeName(resourceTree.getNodeName());
-				gridRecordVo.setResourceContent(resourceTree.getSecurityResource().getResourceContent());
+				gridRecordVo.setNodeDesc(resourceTree.getNodeDesc());
 				gridRecordVo.setParentNodeName(resourceTree.getParentResourceTree()!=null ? resourceTree.getParentResourceTree().getNodeName() : "");
 				gridRecordVo.setNodeOrder(resourceTree.getNodeOrder());
 				gridRecordVo.setTreeId(resourceTree.getTreeId());
@@ -113,8 +121,15 @@ public class ResourceService {
 	
 	@Transactional(readOnly = false)
 	public void save(ResourceModel resourceModel){
-		SecurityResource securityResource = new SecurityResource();
-		EntityUtils.insertValue(securityResource);
+		SecurityResource securityResource = null;
+		if (StrUtils.isNotBlank(resourceModel.getResourceId())) {
+			securityResource = this.resourceRepo.findOne(Integer.parseInt(resourceModel.getResourceId()));
+			EntityUtils.updateValue(securityResource);
+		}else {
+			securityResource = new SecurityResource();
+			EntityUtils.insertValue(securityResource);
+		}
+		
 		securityResource.setResourceContent(resourceModel.getResourceContent());
 		securityResource.setResourceDesc(resourceModel.getResourceDesc());
 		securityResource.setResourceName(resourceModel.getResourceName());
@@ -132,6 +147,40 @@ public class ResourceService {
 			}
 		}else {
 			throw new Exception("Call function ResourceService.deleteByIds ,Id can not be null.");
+		}
+	}
+	
+	public ResourceModel findById(String id){
+		ResourceModel resourceModel = new ResourceModel();
+		if (StrUtils.isNotBlank(id)) {
+			SecurityResource securityResource = this.resourceRepo.findOne(Integer.parseInt(id));
+			if (securityResource!=null) {
+				resourceModel.setResourceId(securityResource.getId()+"");
+				resourceModel.setResourceContent(securityResource.getResourceContent());
+				resourceModel.setResourceDesc(securityResource.getResourceDesc());
+				resourceModel.setResourceName(securityResource.getResourceName());
+				resourceModel.setResourceOrder(securityResource.getResourceOrder()+"");
+				resourceModel.setResourceType(securityResource.getResourceType());
+			}
+		}
+		return resourceModel;
+	}
+	
+	@Transactional(readOnly = false)
+	public void saveResourceTree(ResourceTreeModel resourceTreeModel){
+		if (StrUtils.isNotBlank(resourceTreeModel.getResourceId())) {
+			SecurityResource securityResource = this.resourceRepo.findOne(Integer.parseInt(resourceTreeModel.getResourceId()));
+			
+			SecurityResourceTree securityResourceTree = new SecurityResourceTree();
+			securityResourceTree.setNodeDesc(resourceTreeModel.getTreeNodeDesc());
+			securityResourceTree.setNodeName(resourceTreeModel.getTreeNodeName());
+			securityResourceTree.setNodeOrder(Integer.parseInt(resourceTreeModel.getTreeNodeOrder()));
+			securityResourceTree.setSecurityResource(securityResource);
+			if (StrUtils.isNotBlank(resourceTreeModel.getParentId())) {
+				SecurityResourceTree parentResourceTree = this.resourceTreeRepo.findOne(Integer.parseInt(resourceTreeModel.getParentId()));
+				securityResourceTree.setParentResourceTree(parentResourceTree);
+			}
+			this.resourceTreeRepo.save(securityResourceTree);
 		}
 	}
 }

@@ -451,6 +451,10 @@ function clearForm(formSelector) {
     $form.find('textarea').val('');
 };
 
+function redirectTo(href) {
+    $.blockUI();
+    location.href = href;
+}
 $(function () {
 	initCustomDataApi();
 	styleButton();

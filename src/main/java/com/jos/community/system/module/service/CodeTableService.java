@@ -96,10 +96,12 @@ public class CodeTableService {
 		CodeTableModel codeTableModel = new CodeTableModel();
 		if (StrUtils.isNotBlank(id)) {
 			CodeTable codeTable = this.codeTableRepo.findOne(Integer.parseInt(id));
-			codeTableModel.setCodeTableId(id);
-			codeTableModel.setCode(codeTable.getCode());
-			codeTableModel.setCodeTableType(codeTable.getType());
-			codeTableModel.setDescription(codeTable.getDescription());
+			if (codeTable!=null) {
+				codeTableModel.setCodeTableId(id);
+				codeTableModel.setCode(codeTable.getCode());
+				codeTableModel.setCodeTableType(codeTable.getType());
+				codeTableModel.setDescription(codeTable.getDescription());
+			}
 		}
 		return codeTableModel;
 	}

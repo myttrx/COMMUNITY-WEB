@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,11 +26,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jos.community.module.service.MessageService;
 import com.jos.community.system.module.entity.CodeTable;
-import com.jos.community.system.module.model.CodeTableModel;
 import com.jos.community.system.module.model.ResourceModel;
+import com.jos.community.system.module.model.ResourceTreeModel;
 import com.jos.community.system.module.service.CodeTableService;
 import com.jos.community.system.module.service.ResourceService;
-import com.jos.community.system.module.vo.CodeTableGridRecordVo;
+import com.jos.community.system.module.validator.ResourceTreeValidator;
+import com.jos.community.system.module.validator.ResourceValidator;
 import com.jos.community.system.module.vo.ResourceGridRecordVo;
 import com.jos.community.system.module.vo.ResourceTreeGridRecordVo;
 import com.jos.community.utils.Constant;
@@ -45,7 +47,7 @@ public class SecurityResourceCtrl {
 	protected static Logger logger = LoggerFactory.getLogger(SecurityResourceCtrl.class);
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
-	
+
 	@Autowired
 	private MessageService messageService;
 	@Autowired
@@ -71,6 +73,7 @@ public class SecurityResourceCtrl {
 			@RequestParam(value = "sidx", defaultValue = "") String sidx,
 			@RequestParam(value = "sord", defaultValue = "") String sord,
 			@RequestParam(value = "filters", defaultValue = "") String filters,
+			@RequestParam(value = "resourceId", defaultValue = "0") int resourceId,
 			HttpServletRequest request){
 //		Set<Object> set = request.getParameterMap().keySet();
 //		for(Object key : set){
@@ -85,7 +88,7 @@ public class SecurityResourceCtrl {
 		}else {
 			pageable = new PageRequest(page - 1, rows);
 		}
-		Page<ResourceTreeGridRecordVo> datas = this.resourceService.searchResourceTree(pageable);
+		Page<ResourceTreeGridRecordVo> datas = this.resourceService.searchResourceTree(pageable,resourceId);
 		JqGrid<ResourceTreeGridRecordVo> jqGrid = new JqGrid<ResourceTreeGridRecordVo>();
 		jqGrid.setPage(page);
 		jqGrid.setRows(rows);
@@ -93,7 +96,7 @@ public class SecurityResourceCtrl {
 		jqGrid.setGriddata(datas.getContent());
 		jqGrid.setTotalpages(datas.getTotalPages());
 		jqGrid.setTotalrecords(datas.getTotalElements());
-		jqGrid.addCols("nodeName","resourceContent","parentNodeName","nodeOrder","treeId");
+		jqGrid.addCols("nodeName","nodeDesc","parentNodeName","nodeOrder","treeId");
 		String json = jqGrid.toJson();
 		return json;
 	}
@@ -134,9 +137,11 @@ public class SecurityResourceCtrl {
 		return json;
 	}
 	
+	@Validated(ResourceValidator.class)
 	@RequestMapping(value="save.shtml",method = RequestMethod.POST)
 	@ResponseBody
-	public JsonResponse save(@ModelAttribute @Validated ResourceModel resourceModel, BindingResult result){
+	public JsonResponse save(@ModelAttribute ResourceModel resourceModel, BindingResult result){
+		new ResourceValidator().validate(resourceModel, result);
 		JsonResponse jsonResponse = new JsonResponse();
 		if (result.hasErrors()) {
 			jsonResponse.setValidationFailStatus();
@@ -170,6 +175,42 @@ public class SecurityResourceCtrl {
 		}
 		return jsonResponse;
 	}
+	
+	@RequestMapping(value = "{id}/edit.shtml", method = RequestMethod.GET)
+	public String edit(Model model,@PathVariable("id") String id){
+		
+		ResourceModel resourceModel = this.resourceService.findById(id);
+		ResourceTreeModel resourceTreeModel = new ResourceTreeModel();
+		resourceTreeModel.setResourceId(resourceModel.getResourceId());
+		List<CodeTable> resourceTypeList = this.codeTableService.findByType(Constant.CodeTableType.RESOURCE);
+		String resourceTypeOpts = SelectHelper.getOptions(true, resourceTypeList, "code", "code", resourceModel.getResourceType());
+		model.addAttribute("resourceModel", resourceModel);
+		model.addAttribute("resourceTypeOpts", resourceTypeOpts);
+		model.addAttribute("resourceTreeModel", resourceTreeModel);
+		return "module/system/resource_edit";
+	}
+	
+	@RequestMapping(value="saveTree.shtml",method = RequestMethod.POST)
+	@ResponseBody
+	public JsonResponse saveTree(@ModelAttribute ResourceTreeModel resourceTreeModel, BindingResult result){
+		new ResourceTreeValidator().validate(resourceTreeModel, result);
+		JsonResponse jsonResponse = new JsonResponse();
+		if (result.hasErrors()) {
+			jsonResponse.setValidationFailStatus();
+			jsonResponse.setErrors(result.getFieldErrors());
+			return jsonResponse;
+		}
+		try {
+			this.resourceService.saveResourceTree(resourceTreeModel);
+			jsonResponse.setSuccess();
+			jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.RECORD_SAVE_SUCCESS));
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResponse.setFail();
+			jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.SYSTEM_ERROR));
+		}
+		return jsonResponse;
+	} 
 	
 	@RequestMapping(value = "/loadResourceTreeData.shtml", method = RequestMethod.GET)
 	@ResponseBody
