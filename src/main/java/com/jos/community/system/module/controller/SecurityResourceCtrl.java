@@ -9,6 +9,7 @@ import org.codehaus.jackson.map.DeserializationConfig.Feature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +50,14 @@ public class SecurityResourceCtrl {
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
 
+	@Autowired
+	@Qualifier(value = "resourceValidator")
+	private Validator resourceValidator;
+	
+	@Autowired
+	@Qualifier(value = "resourceTreeValidator")
+	private Validator resourceTreeValidator;
+	
 	@Autowired
 	private MessageService messageService;
 	@Autowired
@@ -141,7 +151,7 @@ public class SecurityResourceCtrl {
 	@RequestMapping(value="save.shtml",method = RequestMethod.POST)
 	@ResponseBody
 	public JsonResponse save(@ModelAttribute ResourceModel resourceModel, BindingResult result){
-		new ResourceValidator().validate(resourceModel, result);
+		resourceValidator.validate(resourceModel, result);
 		JsonResponse jsonResponse = new JsonResponse();
 		if (result.hasErrors()) {
 			jsonResponse.setValidationFailStatus();
@@ -193,7 +203,7 @@ public class SecurityResourceCtrl {
 	@RequestMapping(value="saveTree.shtml",method = RequestMethod.POST)
 	@ResponseBody
 	public JsonResponse saveTree(@ModelAttribute ResourceTreeModel resourceTreeModel, BindingResult result){
-		new ResourceTreeValidator().validate(resourceTreeModel, result);
+		resourceTreeValidator.validate(resourceTreeModel, result);
 		JsonResponse jsonResponse = new JsonResponse();
 		if (result.hasErrors()) {
 			jsonResponse.setValidationFailStatus();
