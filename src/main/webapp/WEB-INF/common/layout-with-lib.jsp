@@ -80,6 +80,7 @@
 <script src="${g_contextPath}/assets/js/notify/bootstrap-notify.js"></script>
 <script src="${g_contextPath}/assets/js/notify/bootstrap-notify.min.js"></script>
 <script src="${g_contextPath}/assets/js/blockUI/jquery.blockUI.js"></script>
+<script src="${g_contextPath}/assets/js/jquery-ui-1.10.3.full.min.js"></script>
 <!-- ace scripts -->
 <script src="${g_contextPath}/assets/js/ace-elements.min.js"></script>
 <script src="${g_contextPath}/assets/js/ace.min.js"></script>
