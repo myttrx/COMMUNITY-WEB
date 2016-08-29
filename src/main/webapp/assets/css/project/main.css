@@ -1,0 +1,10 @@
+.ui-spinner-input {
+	border: 0;
+	background: 0;
+	color: inherit;
+	padding: 0;
+	margin: .2em 0;
+	vertical-align: middle;
+/* 	margin-left: .4em; */
+	margin-right: 22px
+}
