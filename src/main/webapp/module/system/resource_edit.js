@@ -34,6 +34,9 @@ function runPageLogic(){
         );
 	});
 	
+	var resourceOrderSpinner = defaultSpinner("resourceOrder");
+	var treeNodeOrderSpinner = defaultSpinner("treeNodeOrder");
+	
 	$("#selectParentResource").tooltip({
 		show: {
 			effect: "slideDown",

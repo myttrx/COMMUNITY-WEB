@@ -455,6 +455,24 @@ function redirectTo(href) {
     $.blockUI();
     location.href = href;
 }
+
+
+function defaultSpinner(control){
+	var spinner = $("#"+control).spinner({
+		  min: 0,
+		  create: function(event, ui) {
+				//add custom classes and icons
+				$(this)
+				.next().addClass('btn btn-success').html('<i class="icon-plus"></i>')
+				.next().addClass('btn btn-danger').html('<i class="icon-minus"></i>')
+				//larger buttons on touch devices
+				if(ace.click_event == "tap") $(this).closest('.ui-spinner').addClass('ui-spinner-touch');
+			}
+	});
+	$("#"+control).autotab('filter', 'number');
+	return spinner;
+}
+
 $(function () {
 	initCustomDataApi();
 	styleButton();

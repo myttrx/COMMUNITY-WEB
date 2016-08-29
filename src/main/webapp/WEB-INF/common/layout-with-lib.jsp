@@ -55,7 +55,7 @@
 <script src="${g_contextPath}/assets/js/bootstrap.min.js"></script>
 <script src="${g_contextPath}/assets/js/typeahead-bs2.min.js"></script>
 
-<!-- page specific plugin scripts eg,jqgrid,Form Elements,bootstrap-notify,jquery.blockUI-->
+<!-- page specific plugin scripts eg,jqgrid,Form Elements,bootstrap-notify,jquery.blockUI,jquery ui,-->
 <!--[if lte IE 8]>
   <script src="${g_contextPath}/assets/js/excanvas.min.js"></script>
 <![endif]-->
@@ -81,6 +81,7 @@
 <script src="${g_contextPath}/assets/js/notify/bootstrap-notify.min.js"></script>
 <script src="${g_contextPath}/assets/js/blockUI/jquery.blockUI.js"></script>
 <script src="${g_contextPath}/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+<script src="${g_contextPath}/assets/js/autotab/jquery.autotab.js"></script>
 <!-- ace scripts -->
 <script src="${g_contextPath}/assets/js/ace-elements.min.js"></script>
 <script src="${g_contextPath}/assets/js/ace.min.js"></script>

@@ -115,7 +115,7 @@
 							<div class="form-group form-group-sm">
 								<label class="control-label col-md-3 col-lg-2">Resource Name<spring:message code="mandatorySymbol" /></label>
 								<div class="col-md-3 col-lg-3">
-									<form:input path="resourceName" type="text" class="col-xs-10 col-sm-12" placeholder="Resource Name" id="resourceName" maxlength="200" />
+									<form:input path="resourceName" type="text" class="form-control col-xs-10 col-sm-12" placeholder="Resource Name" id="resourceName" maxlength="200" />
 								</div>
 								<label class="control-label col-md-2 col-lg-3" for="form-field-1">Resource Type<spring:message code="mandatorySymbol" /></label>
 								<div class="col-sm-4">
@@ -130,20 +130,21 @@
 							<div class="form-group form-group-sm">
 								<label class="control-label col-md-3 col-lg-2">Resource Content<spring:message code="mandatorySymbol" /></label>
 								<div class="col-md-9 col-lg-9">
-									<form:input path="resourceContent" type="text" class="col-xs-10 col-sm-12" placeholder="Resource Content" id="resourceContent" maxlength="100" />
+									<form:input path="resourceContent" type="text" class="form-control col-xs-10 col-sm-12" placeholder="Resource Content" id="resourceContent" maxlength="100" />
 								</div>
 							</div>
 						</div>
+						
 						
 						<div class="row">
 							<div class="form-group form-group-sm">
 								<label class="control-label col-md-3 col-lg-2">Resource Order<spring:message code="mandatorySymbol" /></label>
 								<div class="col-md-3 col-lg-3">
-									<form:input path="resourceOrder" type="text" class="col-xs-10 col-sm-12" placeholder="1" id="resourceOrder" maxlength="19" />
+									<form:input path="resourceOrder" type="text" class="ui-spinner-input" placeholder="1" id="resourceOrder" maxlength="19" />
 								</div>
 								<label class="control-label col-md-2 col-lg-3" for="form-field-1">Resource Description</label>
 								<div class="col-md-3 col-lg-3">
-									<form:input path="resourceDesc" type="text" class="col-xs-10 col-sm-12" placeholder="Resource Description" id="resourceDesc" maxlength="300" />
+									<form:input path="resourceDesc" type="text" class="form-control col-xs-10 col-sm-12" placeholder="Resource Description" id="resourceDesc" maxlength="300" />
 								</div>
 							</div>
 						</div>

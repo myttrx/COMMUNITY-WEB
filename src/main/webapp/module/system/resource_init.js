@@ -9,6 +9,10 @@ function runPageLogic(){
 		$("#resourceGrid").jqGrid('setGridParam',{datatype:'json', postData : {searchForm: postData}}).trigger('reloadGrid');
 	});
 	
+	
+	//var spinner = $("#resourceOrder").spinner();
+	defaultSpinner("resourceOrder");
+	
 	$("#btnSave").click(function(){
 		var $form = $("#dataForm");
 		var actionUrl = g_contextPath +"/system/resource/save.shtml";
@@ -20,7 +24,7 @@ function runPageLogic(){
              }
         );
 	});
-	
+
 }
 
 function initResourceGrid(){
