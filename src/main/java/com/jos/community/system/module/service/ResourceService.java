@@ -183,4 +183,28 @@ public class ResourceService {
 			this.resourceTreeRepo.save(securityResourceTree);
 		}
 	}
+	
+	public Page<ResourceTreeGridRecordVo> searchTreeNode(Pageable pageable){
+		Page<ResourceTreeGridRecordVo> page = null;
+		Page<SecurityResourceTree> result = this.resourceTreeRepo.findAll(pageable);
+		if (result!=null && result.getContent().size()>0) {
+			List<SecurityResourceTree> resultList = result.getContent();
+			List<ResourceTreeGridRecordVo> gridRecordVoList = new ArrayList<ResourceTreeGridRecordVo>();
+			for(SecurityResourceTree resourceTree : resultList){
+				ResourceTreeGridRecordVo gridRecordVo = new ResourceTreeGridRecordVo();
+				gridRecordVo.setNodeName(resourceTree.getNodeName());
+				gridRecordVo.setNodeDesc(resourceTree.getNodeDesc());
+				gridRecordVo.setResourceContent(resourceTree.getSecurityResource().getResourceContent());
+				gridRecordVo.setResourceName(resourceTree.getSecurityResource().getResourceName());
+				gridRecordVo.setParentNodeName(resourceTree.getParentResourceTree()!=null ? resourceTree.getParentResourceTree().getNodeName() : "");
+				gridRecordVo.setNodeOrder(resourceTree.getNodeOrder());
+				gridRecordVo.setTreeId(resourceTree.getTreeId());
+				gridRecordVoList.add(gridRecordVo);
+			}
+			page = new PageImpl<ResourceTreeGridRecordVo>(gridRecordVoList,pageable,result.getNumberOfElements());
+		}else {
+			page = new PageImpl<ResourceTreeGridRecordVo>(new ArrayList<ResourceTreeGridRecordVo>(), pageable, 0);
+		}
+		return page;
+	}
 }

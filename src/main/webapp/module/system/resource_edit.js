@@ -10,6 +10,11 @@ function runPageLogic(){
 		$("#resourceGrid").jqGrid('setGridParam',{datatype:'json', postData : {searchForm: postData}}).trigger('reloadGrid');
 	});
 	
+	$("#selectParentNode").click(function(){
+		displayParentNodeInput();
+		initResourceTreeNodeGrid();
+	});
+	
 	$("#btnSave").click(function(){
 		var $form = $("#dataForm");
 		var actionUrl = g_contextPath +"/system/resource/save.shtml";
@@ -37,7 +42,7 @@ function runPageLogic(){
 	var resourceOrderSpinner = defaultSpinner("resourceOrder");
 	var treeNodeOrderSpinner = defaultSpinner("treeNodeOrder");
 	
-	$("#selectParentResource").tooltip({
+	$("#selectParentNode").tooltip({
 		show: {
 			effect: "slideDown",
 			delay: 250
@@ -146,6 +151,7 @@ function initResourceTreeGrid(){
     $("#resourceTreeGrid").jqGrid('setGridParam',{datatype:'json', postData : {resourceId: $("#resourceId").val()}}).trigger('reloadGrid');
     
 	function onNewRecord(){
+		$("#parentNodeName").text("");
 		displayResourceTreeInput();
 	}
 
@@ -159,40 +165,40 @@ function initResourceTreeGrid(){
 	}
 	
 }
-function initTreeGrid(){
-	var $resourceTreeGrid = $("#resourceTreeGrid");
-    var resourceTreeGridPager = "#resourceTreeGridPager";
+function initResourceTreeNodeGrid(){
+	var $resourceTreeNodeGrid = $("#resourceTreeNodeGrid");
+    var resourceTreeNodeGridPager = "#resourceTreeNodeGridPager";
    
-    $resourceTreeGrid.jqGrid({
-    	postData : {searchForm: $("#searchForm").form2json()},
-    	url: g_contextPath +"/system/resource/searchResourceTree.shtml",
-		//data: grid_data,
+    $resourceTreeNodeGrid.jqGrid({
+    	url: g_contextPath +"/system/resource/searchTreeNode.shtml",
     	datatype: "local",
         mtype: "POST",
-		colNames:['Node Name', 'Resource Content','Parent Node Name','Node Order','id'],
+		colNames:['Node Name', 'Resource Name','Resource Content','Parent Node Name','Node Order','id'],
 		colModel:[
-			{name:'nodeName',index:'nodeName', width:2},
+			{name:'nodeName',index:'nodeName', width:3},
+			{name:'resourceName',index:'securityResource.resourceName', width:3},
 			{name:'resourceContent',index:'securityResource.resourceContent', width:4},
-			{name:'parentNodeName',index:'parentResourceTree.nodeName',width:4},
-			{name:'nodeOrder',index:'nodeOrder',width:1},
+			{name:'parentNodeName',index:'parentResourceTree.nodeName',width:3},
+			{name:'nodeOrder',index:'nodeOrder',width:2},
 			{name:'treeId',width:1,hidden:true},
 		],
-		pager : resourceTreeGridPager,
+		pager : resourceTreeNodeGridPager,
 		viewrecords : true,
 		autowidth: false,
         width : $("#resource_tree_modal_div .modal-content").width()*0.95,
 		loadComplete : defaultGridLoadComplete,
-		caption: "Children Resource Tree List",
+		caption: "Resource Tree Node List",
         ondblClickRow: function (rowId, iRow, iCol, e) {
-            var data = $resourceTreeGrid.jqGrid('getRowData', rowId);
+            var data = $resourceTreeNodeGrid.jqGrid('getRowData', rowId);
             var id = data.treeId;
             var nodeName = data.nodeName;
-            $("#parentResourceTreeId").val(id);
-            $("#parentResource").text(nodeName);
+            $("#parentId").val(id);
+            $("#parentNodeName").text(nodeName);
+            $('#parent_node_modal_div').modal('hide');
         }
 	});
 
-    $resourceTreeGrid.jqGrid('navGrid', resourceTreeGridPager, {
+    $resourceTreeNodeGrid.jqGrid('navGrid', resourceTreeNodeGridPager, {
         //navbar options
         search: true,
         refresh: true,
@@ -211,9 +217,10 @@ function initTreeGrid(){
     
 	$(window).resize(function() {
 		$(window).unbind("onresize");
-		$resourceTreeGrid.jqGrid().setGridWidth($(".modal-content").width()*0.95);
+		$resourceTreeNodeGrid.jqGrid().setGridWidth($("#resource_tree_modal_div .modal-content").width()*0.95);
 		$(window).bind("onresize", this);
 	});
+	$("#resourceTreeNodeGrid").jqGrid('setGridParam',{datatype:'json', postData : {}}).trigger('reloadGrid');
 }
 function displayResourceTreeInput() {
 	 $('#resource_tree_modal_div').modal({ 
@@ -223,8 +230,8 @@ function displayResourceTreeInput() {
 	 });
 };
 
-function displayParentResourceInput() {
-	 $('#parent_resource_modal_div').modal({ 
+function displayParentNodeInput() {
+	 $('#parent_node_modal_div').modal({ 
 		 backdrop: 'static', 
 		 show: true, 
 		 keyboard:false,

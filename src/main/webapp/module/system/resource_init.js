@@ -9,8 +9,6 @@ function runPageLogic(){
 		$("#resourceGrid").jqGrid('setGridParam',{datatype:'json', postData : {searchForm: postData}}).trigger('reloadGrid');
 	});
 	
-	
-	//var spinner = $("#resourceOrder").spinner();
 	defaultSpinner("resourceOrder");
 	
 	$("#btnSave").click(function(){

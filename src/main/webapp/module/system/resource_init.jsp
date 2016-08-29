@@ -164,19 +164,7 @@
 			</div>
 		</div>
 	</div>
-	
-<!-- 
-	<div class="form-group" style="">
-		<label for="sp_numbering_plan" class="control-label col-md-3 col-lg-2">Parent Resource<spring:message code="mandatorySymbol" /></label>
-		<div class="col-md-3 col-lg-6">
-			<p class="form-control-static">
-				<em id="parentResource"></em> <a class="pink" id="selectParentResource" href="#" title="Select Parent Resource"> <i class="icon-hand-right"></i> Select Parent Resource
-				</a>
-			</p>
 
-		</div>
-	</div>
- -->
 	<div class="modal fade" id="parent_resource_modal_div" tabindex="-1" role="dialog" aria-labelledby="duplicate_case_label" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">

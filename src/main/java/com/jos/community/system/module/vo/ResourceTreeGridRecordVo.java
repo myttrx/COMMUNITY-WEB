@@ -4,6 +4,8 @@ public class ResourceTreeGridRecordVo {
 
 	private String nodeName;
 	private String nodeDesc;
+	private String resourceContent;
+	private String resourceName;
 	private String parentNodeName;
 	private int nodeOrder;
 	private int treeId;
@@ -46,6 +48,22 @@ public class ResourceTreeGridRecordVo {
 
 	public void setTreeId(int treeId) {
 		this.treeId = treeId;
+	}
+
+	public String getResourceContent() {
+		return resourceContent;
+	}
+
+	public void setResourceContent(String resourceContent) {
+		this.resourceContent = resourceContent;
+	}
+
+	public String getResourceName() {
+		return resourceName;
+	}
+
+	public void setResourceName(String resourceName) {
+		this.resourceName = resourceName;
 	}
 
 }

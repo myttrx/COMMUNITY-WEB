@@ -44,7 +44,7 @@
 				<!-- PAGE CONTENT BEGINS -->
 				<form:form id="dataForm" modelAttribute="resourceModel" class="form-horizontal" role="form">
 					<fieldset></fieldset>
-					<form:input path="resourceId" type="text" id="resourceId" cssStyle="display: none;"/>
+					<form:input path="resourceId" type="text" id="resourceId" cssStyle="display: none;" />
 
 					<div class="row">
 						<div class="form-group form-group-sm">
@@ -85,7 +85,7 @@
 
 					<div class="clearfix form-actions">
 						<div class="col-md-offset-3 col-md-9">
-							<button class="btn btn-purple btn-sm" type="button" id="btnSave">
+							<button class="btn btn-info btn-sm" type="button" id="btnSave">
 								<spring:message code="btn.save" />
 							</button>
 							&nbsp; &nbsp; &nbsp;
@@ -123,28 +123,39 @@
 				<div class="modal-body">
 					<form:form id="treeDataForm" modelAttribute="resourceTreeModel" class="form-horizontal" role="form">
 						<fieldset></fieldset>
-						<form:input path="resourceId" type="text" id="resourceId" cssStyle="display: none;"/>
+						<form:input path="resourceId" type="text" id="resourceId" cssStyle="display: none;" />
 						<div class="row">
 							<div class="form-group form-group-sm">
 								<label class="control-label col-md-3 col-lg-2">Node Name<spring:message code="mandatorySymbol" /></label>
 								<div class="col-md-3 col-lg-3">
 									<form:input path="treeNodeName" type="text" class="form-control col-xs-10 col-sm-12" placeholder="Node Name" id="treeNodeName" maxlength="100" />
 								</div>
-								<label class="control-label col-md-2 col-lg-3" for="form-field-1">parentId</label>
+								<label class="control-label col-md-3 col-lg-3">Node Order<spring:message code="mandatorySymbol" /></label>
 								<div class="col-md-3 col-lg-3">
-									<form:input path="parentId" type="text" class="form-control col-xs-10 col-sm-12" placeholder="Parent Id" id="parentId" maxlength="19" />
+									<form:input path="treeNodeOrder" type="text" class="ui-spinner-input" placeholder="1" id="treeNodeOrder" maxlength="19" />
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="form-group form-group-sm">
-								<label class="control-label col-md-3 col-lg-2">Node Order<spring:message code="mandatorySymbol" /></label>
-								<div class="col-md-3 col-lg-3">
-									<form:input path="treeNodeOrder" type="text" class="ui-spinner-input" placeholder="1" id="treeNodeOrder" maxlength="19" />
-								</div>
-								<label class="control-label col-md-2 col-lg-3" for="form-field-1">Node Description</label>
+								<label class="control-label col-md-2 col-lg-2" for="form-field-1">Node Description</label>
 								<div class="col-md-3 col-lg-3">
 									<form:input path="treeNodeDesc" type="text" class="form-control col-xs-10 col-sm-12" placeholder="Node Description" id="treeNodeDesc" maxlength="300" />
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="form-group form-group-sm">
+								
+								<label class="control-label col-md-2 col-lg-2" for="form-field-1">Parent Node</label>
+								<div class="col-md-3 col-lg-6">
+									<p class="form-control-static">
+										<em id="parentNodeName"></em> <a class="pink" id="selectParentNode" href="#" title="Select Parent Node"> <i class="icon-hand-right"></i> Select Parent Node
+										</a>
+									</p>
+									<form:input path="parentId" type="text"  placeholder="Parent Node" id="parentId" cssStyle="display: none;" />
+
 								</div>
 							</div>
 						</div>
@@ -165,42 +176,27 @@
 		</div>
 	</div>
 
-	<!-- 
-	<div class="form-group" style="">
-		<label for="sp_numbering_plan" class="control-label col-md-3 col-lg-2">Parent Resource<spring:message code="mandatorySymbol" /></label>
-		<div class="col-md-3 col-lg-6">
-			<p class="form-control-static">
-				<em id="parentResource"></em> <a class="pink" id="selectParentResource" href="#" title="Select Parent Resource"> <i class="icon-hand-right"></i> Select Parent Resource
-				</a>
-			</p>
-
-		</div>
-	</div>
- -->
- 
- <!-- 
-	<div class="modal fade" id="parent_resource_modal_div" tabindex="-1" role="dialog" aria-labelledby="duplicate_case_label" aria-hidden="true">
+	<div class="modal fade" id="parent_node_modal_div" tabindex="-1" role="dialog" aria-labelledby="duplicate_case_label" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only"></span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Security Tree Resource</h4>
+					<h4 class="modal-title" id="myModalLabel">Select Resource Tree Node</h4>
 				</div>
 				<div class="modal-body">
-					<table id="resourceTreeGrid" class="jqGrid">
+					<table id="resourceTreeNodeGrid" class="jqGrid">
 					</table>
-					<div id="resourceTreeGridPager"></div>
+					<div id="resourceTreeNodeGridPager"></div>
 				</div>
 
 			</div>
 		</div>
 	</div>
- -->
 
 	<!-- inline scripts related to this page -->
-	
+
 	<script src="${g_contextPath}/module/system/resource_edit.js"></script>
 </body>
 </html>

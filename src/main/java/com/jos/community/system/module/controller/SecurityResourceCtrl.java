@@ -220,7 +220,36 @@ public class SecurityResourceCtrl {
 			jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.SYSTEM_ERROR));
 		}
 		return jsonResponse;
-	} 
+	}
+	
+	@RequestMapping(value = "/searchTreeNode.shtml", method = RequestMethod.POST)
+	@ResponseBody
+	public String searchTreeNode(@RequestParam(value = "format", defaultValue = "json") String format,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "rows", defaultValue = "10") int rows,
+			@RequestParam(value = "sidx", defaultValue = "") String sidx,
+			@RequestParam(value = "sord", defaultValue = "") String sord,
+			@RequestParam(value = "filters", defaultValue = "") String filters,
+			HttpServletRequest request){
+
+		Pageable pageable = null;
+		if(StrUtils.isNotBlank(sidx)){
+			pageable = new PageRequest(page - 1, rows,sord.equals(Constant.JqGridSord.DESC) ? Sort.Direction.DESC : Sort.Direction.ASC,sidx);
+		}else {
+			pageable = new PageRequest(page - 1, rows);
+		}
+		Page<ResourceTreeGridRecordVo> datas = this.resourceService.searchTreeNode(pageable);
+		JqGrid<ResourceTreeGridRecordVo> jqGrid = new JqGrid<ResourceTreeGridRecordVo>();
+		jqGrid.setPage(page);
+		jqGrid.setRows(rows);
+		jqGrid.setCurrentPageRecords(datas.getNumberOfElements());
+		jqGrid.setGriddata(datas.getContent());
+		jqGrid.setTotalpages(datas.getTotalPages());
+		jqGrid.setTotalrecords(datas.getTotalElements());
+		jqGrid.addCols("nodeName","resourceName","resourceContent","parentNodeName","nodeOrder","treeId");
+		String json = jqGrid.toJson();
+		return json;
+	}
 	
 	@RequestMapping(value = "/loadResourceTreeData.shtml", method = RequestMethod.GET)
 	@ResponseBody
