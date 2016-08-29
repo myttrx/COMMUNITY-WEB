@@ -459,7 +459,7 @@ function redirectTo(href) {
 
 function defaultSpinner(control){
 	var spinner = $("#"+control).spinner({
-		  min: 0,
+		  min: 1,
 		  create: function(event, ui) {
 				//add custom classes and icons
 				$(this)
