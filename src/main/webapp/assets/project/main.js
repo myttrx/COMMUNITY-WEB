@@ -406,6 +406,7 @@ function initCustomDataApi() {
     $("button[type='reset']").click(function (e) {
     	clearForm("#"+this.form.id);
     });
+    
     //adapter the screen width
     $(".jqGrid").each(function (e) {
     	var $grid_selector = $(this);

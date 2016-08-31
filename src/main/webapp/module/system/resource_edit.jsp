@@ -102,6 +102,14 @@
 				</table>
 
 				<div id="resourceTreeGridPager"></div>
+				
+				<p><p>
+				
+				<table id="childrenResourceTreeGrid" class="jqGrid">
+
+				</table>
+
+				<div id="childrenResourceTreeGridPager"></div>
 
 				<!-- PAGE CONTENT ENDS -->
 			</div>

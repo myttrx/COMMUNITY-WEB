@@ -129,7 +129,6 @@ public class ResourceService {
 			securityResource = new SecurityResource();
 			EntityUtils.insertValue(securityResource);
 		}
-		
 		securityResource.setResourceContent(resourceModel.getResourceContent());
 		securityResource.setResourceDesc(resourceModel.getResourceDesc());
 		securityResource.setResourceName(resourceModel.getResourceName());
@@ -146,7 +145,7 @@ public class ResourceService {
 				this.resourceRepo.delete(Integer.parseInt(id));
 			}
 		}else {
-			throw new Exception("Call function ResourceService.deleteByIds ,Id can not be null.");
+			throw new RuntimeException("Call function ResourceService.deleteByIds ,Id can not be null.");
 		}
 	}
 	
@@ -206,5 +205,54 @@ public class ResourceService {
 			page = new PageImpl<ResourceTreeGridRecordVo>(new ArrayList<ResourceTreeGridRecordVo>(), pageable, 0);
 		}
 		return page;
+	}
+	
+	public Page<ResourceTreeGridRecordVo> searchChildrenTreeNode(Pageable pageable,int parentTreeId){
+		Collection<SearchFilter> filters = null;
+		Specification<SecurityResourceTree> spec = null;
+		filters =new ArrayList<SearchFilter>();
+		SearchFilter filter = null;
+		filter = new SearchFilter("parentResourceTree.treeId", Operator.EQ, parentTreeId);
+		filters.add(filter);
+		spec = DynamicSpecifications.bySearchFilter(filters,SecurityResourceTree.class);
+		Page<ResourceTreeGridRecordVo> page = null;
+		Page<SecurityResourceTree> result = this.resourceTreeRepo.findAll(spec,pageable);
+		if (result!=null && result.getContent().size()>0) {
+			List<SecurityResourceTree> resultList = result.getContent();
+			List<ResourceTreeGridRecordVo> gridRecordVoList = new ArrayList<ResourceTreeGridRecordVo>();
+			for(SecurityResourceTree resourceTree : resultList){
+				ResourceTreeGridRecordVo gridRecordVo = new ResourceTreeGridRecordVo();
+				gridRecordVo.setNodeName(resourceTree.getNodeName());
+				gridRecordVo.setNodeDesc(resourceTree.getNodeDesc());
+				gridRecordVo.setResourceContent(resourceTree.getSecurityResource().getResourceContent());
+				gridRecordVo.setResourceName(resourceTree.getSecurityResource().getResourceName());
+				gridRecordVo.setParentNodeName(resourceTree.getParentResourceTree()!=null ? resourceTree.getParentResourceTree().getNodeName() : "");
+				gridRecordVo.setNodeOrder(resourceTree.getNodeOrder());
+				gridRecordVo.setTreeId(resourceTree.getTreeId());
+				gridRecordVoList.add(gridRecordVo);
+			}
+			page = new PageImpl<ResourceTreeGridRecordVo>(gridRecordVoList,pageable,result.getNumberOfElements());
+		}else {
+			page = new PageImpl<ResourceTreeGridRecordVo>(new ArrayList<ResourceTreeGridRecordVo>(), pageable, 0);
+		}
+		return page;
+	}
+	
+	@Transactional(readOnly = false)
+	public void deleteResourceTreeByIds(String ids)throws Exception{
+		if (StrUtils.isNotBlank(ids)) {
+			String [] idArray = ids.split(",");
+			for(String id : idArray){
+				SecurityResourceTree securityResourceTree = this.resourceTreeRepo.findOne(Integer.parseInt(id));
+				if (securityResourceTree!=null) {
+					if (securityResourceTree.getChildrenResourceTrees()!=null && securityResourceTree.getChildrenResourceTrees().size()>0) {
+						throw new RuntimeException("Node Name '"+securityResourceTree.getNodeName() + "' have Children Node,Can not be deleted.");
+					}
+					this.resourceTreeRepo.delete(securityResourceTree);
+				}
+			}
+		}else {
+			throw new Exception("Call function ResourceService.deleteResourceTreeByIds ,Id can not be null.");
+		}
 	}
 }

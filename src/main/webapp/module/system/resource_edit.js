@@ -2,6 +2,7 @@ $(function($) {
 	runPageLogic();
 
 	initResourceTreeGrid();
+	initChildrenResourceTreeGrid();
 });
 
 function runPageLogic(){
@@ -20,9 +21,7 @@ function runPageLogic(){
 		var actionUrl = g_contextPath +"/system/resource/save.shtml";
         $form.ajaxPostForm(actionUrl,
              function (response) {
-        		//$('#resource_modal_div').modal('hide');
 				notifySuccess(response.singleMessage);
-				//$("#resourceGrid").jqGrid('setGridParam',{datatype:'json', postData : {searchForm: $("#searchForm").form2json()}}).trigger('reloadGrid');
              }
         );
 	});
@@ -55,34 +54,6 @@ function runPageLogic(){
 		$("#resourceTreeGrid").jqGrid('setGridParam',{datatype:'json', postData : {}}).trigger('reloadGrid');
 	});
 }
-//by using nestable control
-function loadResourceTreeData(){
-	var actionUrl = g_contextPath +"/system/resource/loadResourceTreeData.shtml";
-	 ajaxGet(actionUrl,
-       function (response) {
-		 	//initTreeView(response.data);
-		 	$('.dd-handle a').on('mousedown', function(e){
-				e.stopPropagation();
-			});
-			
-			$('[data-rel="tooltip"]').tooltip();
-			 
-       }
-   );
-}
-function initTreeView(data){
-	var dataSource = new DataSourceTree({data: eval("(" + data + ")")});
-	$('#tree1').ace_tree({
-		dataSource: dataSource ,
-		multiSelect:false,
-		loadingHTML:'<div class="tree-loading"><i class="icon-refresh icon-spin blue"></i></div>',
-		'open-icon' : 'icon-minus',
-		'close-icon' : 'icon-plus',
-		'selectable' : true,
-		'selected-icon' : 'icon-ok',
-		'unselected-icon' : 'icon-remove'
-	});
-}
 
 function initResourceTreeGrid(){
 	var $resourceTreeGrid = $("#resourceTreeGrid");
@@ -94,30 +65,21 @@ function initResourceTreeGrid(){
         mtype: "POST",
 		colNames:['Node Name', 'Node Description','Parent Node Name','Node Order','id'],
 		colModel:[
-			{name:'resourceName',index:'resourceName', width:2},
-			{name:'resourceType',index:'resourceType', width:1},
-			{name:'resourceContent',width:4},
-			{name:'resourceDesc',width:1},
-			{name:'resourceId',width:1,hidden:true},
+			{name:'nodeName',index:'nodeName', width:2},
+			{name:'nodeDesc',index:'nodeDesc', width:1},
+			{name:'parentNodeName',index:'parentResourceTree.nodeName',width:4},
+			{name:'nodeOrder',width:1},
+			{name:'treeId',width:1,hidden:true},
 		], 
 		pager : resourceTreeGridPager,
-		//toppager: true,
 		multiselect: true,
-		//multikey: "ctrlKey",
         multiboxonly: true,
 		loadComplete : defaultGridLoadComplete,
 		caption: "Resource Tree List",
         ondblClickRow: function (rowId, iRow, iCol, e) {
             var data = $resourceTreeGrid.jqGrid('getRowData', rowId);
-            id = data.resourceId;
-            var findCodeTableUrl = g_contextPath +"/system/codeTable/id/findCodeTable.shtml";
-            var actionUrl = findCodeTableUrl.replace("id", id);
-            ajaxGet(actionUrl,
-                function (response) {
-            		loadDetails(response.data);
-                }
-            );
-
+            id = data.treeId;
+            $("#childrenResourceTreeGrid").jqGrid('setGridParam',{datatype:'json', postData : {parentTreeId: id}}).trigger('reloadGrid');
         }
 	});
 
@@ -130,8 +92,8 @@ function initResourceTreeGrid(){
     	recreateForm: true,
 		beforeShowForm : beforeDeleteCallback,
 		onclickSubmit: function(options, rowId) {
-			var ids = getSelStrByName($resourceGrid,"resourceId");
-            options.url = "deleteResource.shtml?ids="+ids;
+			var ids = getSelStrByName($resourceTreeGrid,"treeId");
+            options.url = g_contextPath +"/system/resource/deleteResourceTree.shtml?ids="+ids;
         },
         afterSubmit: afterDeleteSubmit,
     }, {
@@ -165,6 +127,58 @@ function initResourceTreeGrid(){
 	}
 	
 }
+
+function initChildrenResourceTreeGrid(){
+	var $childrenResourceTreeGrid = $("#childrenResourceTreeGrid");
+    var childrenResourceTreeGridPager = "#childrenResourceTreeGridPager";
+    
+    $childrenResourceTreeGrid.jqGrid({
+    	url: g_contextPath +"/system/resource/searchChildrenTreeNode.shtml",
+    	datatype: "local",
+        mtype: "POST",
+		colNames:['Node Name', 'Node Description','Resource Name','Node Order','id'],
+		colModel:[
+			{name:'nodeName',index:'nodeName', width:3},
+			{name:'nodeDesc',index:'nodeDesc', width:3},
+			{name:'resourceName',index:'securityResource.resourceName',width:3},
+			{name:'nodeOrder',width:1},
+			{name:'treeId',width:1,hidden:true},
+		], 
+		pager : childrenResourceTreeGridPager,
+		//toppager: true,
+		multiselect: false,
+		//multikey: "ctrlKey",
+        multiboxonly: true,
+		loadComplete : defaultGridLoadComplete,
+		caption: "Children Resource Tree List",
+        ondblClickRow: function (rowId, iRow, iCol, e) {
+            var data = $resourceTreeGrid.jqGrid('getRowData', rowId);
+            id = data.resourceId;
+            
+        }
+	});
+
+    $childrenResourceTreeGrid.jqGrid('navGrid', childrenResourceTreeGridPager, {
+        //navbar options
+        search: false,
+        refresh: true,
+        del:false,
+    }, {}, {}, {
+    	recreateForm: true,
+		beforeShowForm : beforeDeleteCallback,
+		onclickSubmit: function(options, rowId) {
+			var ids = getSelStrByName($resourceGrid,"resourceId");
+            options.url = "deleteResource.shtml?ids="+ids;
+        },
+        afterSubmit: afterDeleteSubmit,
+    }, {
+        //search form
+        recreateForm: true,
+        //afterShowSearch: defaultSearchFormAfterShowSearch,
+        //afterRedraw: defaultSearchFormAfterRedraw
+    }, {});
+}
+
 function initResourceTreeNodeGrid(){
 	var $resourceTreeNodeGrid = $("#resourceTreeNodeGrid");
     var resourceTreeNodeGridPager = "#resourceTreeNodeGridPager";

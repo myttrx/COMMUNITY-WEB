@@ -229,8 +229,7 @@ public class SecurityResourceCtrl {
 			@RequestParam(value = "rows", defaultValue = "10") int rows,
 			@RequestParam(value = "sidx", defaultValue = "") String sidx,
 			@RequestParam(value = "sord", defaultValue = "") String sord,
-			@RequestParam(value = "filters", defaultValue = "") String filters,
-			HttpServletRequest request){
+			@RequestParam(value = "filters", defaultValue = "") String filters){
 
 		Pageable pageable = null;
 		if(StrUtils.isNotBlank(sidx)){
@@ -249,6 +248,51 @@ public class SecurityResourceCtrl {
 		jqGrid.addCols("nodeName","resourceName","resourceContent","parentNodeName","nodeOrder","treeId");
 		String json = jqGrid.toJson();
 		return json;
+	}
+	
+	@RequestMapping(value = "/searchChildrenTreeNode.shtml", method = RequestMethod.POST)
+	@ResponseBody
+	public String searchChildrenTreeNode(@RequestParam(value = "format", defaultValue = "json") String format,
+			@RequestParam(value = "page", defaultValue = "0") int page,
+			@RequestParam(value = "rows", defaultValue = "10") int rows,
+			@RequestParam(value = "sidx", defaultValue = "") String sidx,
+			@RequestParam(value = "sord", defaultValue = "") String sord,
+			@RequestParam(value = "filters", defaultValue = "") String filters,
+			@RequestParam(value = "parentTreeId", defaultValue = "0") int parentTreeId){
+
+		Pageable pageable = null;
+		if(StrUtils.isNotBlank(sidx)){
+			pageable = new PageRequest(page - 1, rows,sord.equals(Constant.JqGridSord.DESC) ? Sort.Direction.DESC : Sort.Direction.ASC,sidx);
+		}else {
+			pageable = new PageRequest(page - 1, rows);
+		}
+		Page<ResourceTreeGridRecordVo> datas = this.resourceService.searchChildrenTreeNode(pageable,parentTreeId);
+		JqGrid<ResourceTreeGridRecordVo> jqGrid = new JqGrid<ResourceTreeGridRecordVo>();
+		jqGrid.setPage(page);
+		jqGrid.setRows(rows);
+		jqGrid.setCurrentPageRecords(datas.getNumberOfElements());
+		jqGrid.setGriddata(datas.getContent());
+		jqGrid.setTotalpages(datas.getTotalPages());
+		jqGrid.setTotalrecords(datas.getTotalElements());
+		jqGrid.addCols("nodeName","nodeDesc","resourceName","nodeOrder","treeId");
+		String json = jqGrid.toJson();
+		return json;
+	}
+	
+	@RequestMapping(value="deleteResourceTree.shtml",method = RequestMethod.POST)
+	@ResponseBody
+	public JsonResponse deleteResourceTree(@RequestParam(value = "ids", defaultValue = "") String ids){
+		JsonResponse jsonResponse = new JsonResponse();
+		try {
+			this.resourceService.deleteResourceTreeByIds(ids);
+			jsonResponse.setSuccess();
+			jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.RECORD_DELETE_SUCCESS));
+		} catch (Exception e) {
+			jsonResponse.setFail();
+			jsonResponse.setSingleMessage(e.getMessage());
+			e.printStackTrace();
+		}
+		return jsonResponse;
 	}
 	
 	@RequestMapping(value = "/loadResourceTreeData.shtml", method = RequestMethod.GET)
