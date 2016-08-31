@@ -18,6 +18,6 @@ public class ResourceTreeValidator implements Validator{
 //		CodeTableModel codeTableModel = (CodeTableModel) target;
 		ValidationUtils.rejectIfEmpty(errors, "treeNodeName", "","Node Name can not be empty");
 		ValidationUtils.rejectIfEmpty(errors, "treeNodeOrder", "","Node Order can not be empty");
-		ValidationUtils.rejectIfEmpty(errors, "parentId", "","Parent Id can not be empty");
+		//ValidationUtils.rejectIfEmpty(errors, "parentId", "","Parent Id can not be empty");
 	}
 }

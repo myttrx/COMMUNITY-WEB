@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jos.community.module.service.MessageService;
 import com.jos.community.system.module.entity.CodeTable;
+import com.jos.community.system.module.model.CodeTableModel;
 import com.jos.community.system.module.model.ResourceModel;
 import com.jos.community.system.module.model.ResourceTreeModel;
 import com.jos.community.system.module.service.CodeTableService;
@@ -295,16 +296,24 @@ public class SecurityResourceCtrl {
 		return jsonResponse;
 	}
 	
-	@RequestMapping(value = "/loadResourceTreeData.shtml", method = RequestMethod.GET)
+	@RequestMapping(value="{treeId}/findResourceTree.shtml",method = RequestMethod.GET)
 	@ResponseBody
-	public JsonResponse loadResourceTreeData(){
-		JsonResponse response = new JsonResponse();
-		response.setSuccess();
-		String data = "{'刑侦': {'name': '刑侦','type': 'folder','additionalParameters': {'id': '1','children': {"
-				+ "'痕迹检验': {'name': '痕迹检验','type': 'item','additionalParameters': {'id': '10'}},"
-				+ "'声像技术': {'name': '声像技术','type': 'item','additionalParameters': {'id': '9'}}"
-				+ "}}}}";
-		response.setData(data);
-		return response;
+	public JsonResponse findResourceTree(@PathVariable("treeId") String treeId){
+		JsonResponse jsonResponse = new JsonResponse();
+		if (StrUtils.isNotBlank(treeId)) {
+			try {
+				ResourceTreeModel resourceTreeModel = this.resourceService.findByTreeId(treeId);
+				jsonResponse.setData(resourceTreeModel);
+				jsonResponse.setSuccess();
+			} catch (Exception e) {
+				e.printStackTrace();
+				jsonResponse.setFail();
+				jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.SYSTEM_ERROR));
+			}
+		}else {
+			jsonResponse.setFail();
+			jsonResponse.setSingleMessage(this.messageService.getMessage(Constant.MsgCode.SYSTEM_ERROR));
+		}
+		return jsonResponse;
 	}
 }

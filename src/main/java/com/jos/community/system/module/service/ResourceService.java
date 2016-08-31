@@ -168,9 +168,11 @@ public class ResourceService {
 	@Transactional(readOnly = false)
 	public void saveResourceTree(ResourceTreeModel resourceTreeModel){
 		if (StrUtils.isNotBlank(resourceTreeModel.getResourceId())) {
-			SecurityResource securityResource = this.resourceRepo.findOne(Integer.parseInt(resourceTreeModel.getResourceId()));
-			
 			SecurityResourceTree securityResourceTree = new SecurityResourceTree();
+			if (StrUtils.isNotBlank(resourceTreeModel.getTreeId())) {
+				securityResourceTree = this.resourceTreeRepo.findOne(Integer.parseInt(resourceTreeModel.getTreeId()));
+			}
+			SecurityResource securityResource = this.resourceRepo.findOne(Integer.parseInt(resourceTreeModel.getResourceId()));			
 			securityResourceTree.setNodeDesc(resourceTreeModel.getTreeNodeDesc());
 			securityResourceTree.setNodeName(resourceTreeModel.getTreeNodeName());
 			securityResourceTree.setNodeOrder(Integer.parseInt(resourceTreeModel.getTreeNodeOrder()));
@@ -254,5 +256,19 @@ public class ResourceService {
 		}else {
 			throw new Exception("Call function ResourceService.deleteResourceTreeByIds ,Id can not be null.");
 		}
+	}
+	
+	public ResourceTreeModel findByTreeId(String treeId){
+		ResourceTreeModel resourceTreeModel = new ResourceTreeModel();
+		SecurityResourceTree securityResourceTree = this.resourceTreeRepo.findOne(Integer.parseInt(treeId));
+		if (securityResourceTree!=null) {
+			resourceTreeModel.setTreeId(treeId);
+			resourceTreeModel.setParentNodeName(securityResourceTree.getParentResourceTree()!=null ? securityResourceTree.getParentResourceTree().getNodeName() : "");
+			resourceTreeModel.setParentId(securityResourceTree.getParentResourceTree()!=null ? securityResourceTree.getParentResourceTree().getTreeId() + "" : "");
+			resourceTreeModel.setTreeNodeDesc(securityResourceTree.getNodeDesc());
+			resourceTreeModel.setTreeNodeName(securityResourceTree.getNodeName());
+			resourceTreeModel.setTreeNodeOrder(securityResourceTree.getNodeOrder()+"");
+		}
+		return resourceTreeModel;
 	}
 }

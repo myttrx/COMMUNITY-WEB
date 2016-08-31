@@ -131,7 +131,9 @@
 				<div class="modal-body">
 					<form:form id="treeDataForm" modelAttribute="resourceTreeModel" class="form-horizontal" role="form">
 						<fieldset></fieldset>
+						
 						<form:input path="resourceId" type="text" id="resourceId" cssStyle="display: none;" />
+						<form:input path="treeId" type="text" id="treeId" cssStyle="display: none;" />
 						<div class="row">
 							<div class="form-group form-group-sm">
 								<label class="control-label col-md-3 col-lg-2">Node Name<spring:message code="mandatorySymbol" /></label>

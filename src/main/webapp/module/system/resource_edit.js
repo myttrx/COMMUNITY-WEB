@@ -103,6 +103,13 @@ function initResourceTreeGrid(){
         //afterRedraw: defaultSearchFormAfterRedraw
     }, {}).jqGrid('navButtonAdd', resourceTreeGridPager, {
         caption: "",
+        buttonicon: "icon-pencil blue",
+        onClickButton: onEditRecord,
+        position: "first",
+        title: "Edit Record",
+        cursor: "pointer"
+    }).jqGrid('navButtonAdd', resourceTreeGridPager, {
+        caption: "",
         buttonicon: "icon-plus-sign purple",
         onClickButton: onNewRecord,
         position: "first",
@@ -116,16 +123,29 @@ function initResourceTreeGrid(){
 		$("#parentNodeName").text("");
 		displayResourceTreeInput();
 	}
-
-	function loadDetails(data){
-		$("#dataForm #codeTableId").val(data.codeTableId);
-		$("#dataForm #codeTableType").val(data.codeTableType);
-		$("#dataForm #codeTableType").trigger('chosen:updated');
-		$("#dataForm #code").val(data.code);
-		$("#dataForm #description").val(data.description);
-		displayInput();
+	function onEditRecord(){
+		var ids = getSelStrByName($resourceTreeGrid,"treeId");
+		if(ids==""){
+			return ;
+		}
+		var id = ids.substring(0,ids.indexOf(","));
+        var actionUrl = g_contextPath +"/system/resource/id/findResourceTree.shtml".replace("id", id);
+        ajaxGet(actionUrl,
+            function (response) {
+        		loadResourceTreeDetails(response.data);
+        		displayResourceTreeInput();
+            }
+        );
 	}
 	
+	function loadResourceTreeDetails(data){
+		$("#treeDataForm #treeId").val(data.treeId);
+		$("#treeDataForm #treeNodeName").val(data.treeNodeName);
+		$("#treeDataForm #treeNodeOrder").val(data.treeNodeOrder);
+		$("#treeDataForm #treeNodeDesc").val(data.treeNodeDesc);
+		$("#treeDataForm #parentNodeName").text(data.parentNodeName);
+		$("#treeDataForm #parentId").val(data.parentId);
+	}
 }
 
 function initChildrenResourceTreeGrid(){
